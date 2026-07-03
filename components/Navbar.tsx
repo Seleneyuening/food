@@ -10,7 +10,7 @@ export function Navbar() {
   const pathname = usePathname();
   const bottomLinks = [
     { href: "/", label: "首页", icon: Home, active: pathname === "/" },
-    { href: "/#week-plan", label: "一周菜单", icon: BookOpen, active: false },
+    { href: "/week-plan", label: "一周菜单", icon: BookOpen, active: pathname === "/week-plan" },
     { href: "/ingredients", label: "食材库", icon: Warehouse, active: pathname === "/ingredients" },
     { href: "/#shopping", label: "购物清单", icon: ShoppingBasket, active: false },
     { href: "/#history", label: "我的记录", icon: ClipboardList, active: false }

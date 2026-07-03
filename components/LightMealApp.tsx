@@ -115,7 +115,7 @@ function prepTips(recipe: Recipe) {
   });
 }
 
-export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" }) {
+export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | "recipes" }) {
   const [store, setStore] = useState<Store>({ ingredients: defaultIngredients, logs: defaultLogs, mealPlan: defaultMealPlan });
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState("家里库存");
@@ -308,7 +308,14 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" })
           setTab={setTab}
         />
       )}
-      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view === "home" || view === "inventory" ? "hidden lg:block" : "pb-28 md:pb-14"}`}>
+      {view === "recipes" && (
+        <MobileRecipesPage
+          mealPlan={store.mealPlan}
+          onSelectRecipe={setActiveRecipeId}
+          onSetLunch={setLunch}
+        />
+      )}
+      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view === "home" || view === "inventory" || view === "recipes" ? "hidden lg:block" : "pb-28 md:pb-14"}`}>
         <div className="grid gap-5 lg:grid-cols-[.72fr_1.28fr]">
           <div className="rounded-[14px] border border-[#ece6dc] bg-white p-8 shadow-[0_16px_42px_rgba(70,63,48,.08)]">
             <h1 className="font-serif text-[27px] leading-tight text-[#2f4328]">Good morning, Selene <span className="text-[#7f966b]">枝</span></h1>
@@ -704,6 +711,125 @@ function MobileRecipePicker({
         <button onClick={onConfirm} className="mt-4 min-h-12 w-full rounded-full bg-[#6f835e] text-sm font-semibold text-white">确认更换</button>
       </section>
     </div>
+  );
+}
+
+function MobileRecipesPage({
+  mealPlan,
+  onSelectRecipe,
+  onSetLunch
+}: {
+  mealPlan: MealPlan[];
+  onSelectRecipe: (recipeId: string) => void;
+  onSetLunch: (dayIndex: number, recipeId: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const [tag, setTag] = useState("全部");
+  const [dayIndex, setDayIndex] = useState(2);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerRecipeId, setPickerRecipeId] = useState(mealPlan[2]?.lunchRecipeId ?? recipes[0].id);
+  const tags = ["全部", "鸡肉", "牛肉", "鱼虾", "豆腐", "蒸笼友好", "15 分钟", "高蛋白", "低油", "素食"];
+  const activeDay = mealPlan[dayIndex] ?? mealPlan[0] ?? defaultMealPlan[0];
+  const currentRecipe = recipes.find((recipe) => recipe.id === activeDay.lunchRecipeId) ?? recipes[0];
+  const filtered = recipes.filter((recipe) => {
+    const hitQuery = !query || recipe.name.includes(query) || recipe.ingredients.some((item) => item.name.includes(query));
+    const hitTag =
+      tag === "全部" ||
+      recipe.tags.includes(tag) ||
+      (tag === "鸡肉" && recipe.name.includes("鸡")) ||
+      (tag === "牛肉" && recipe.name.includes("牛")) ||
+      (tag === "鱼虾" && (recipe.name.includes("鱼") || recipe.name.includes("虾"))) ||
+      (tag === "豆腐" && recipe.name.includes("豆腐")) ||
+      (tag === "素食" && !recipe.ingredients.some((item) => ["beef", "chicken-breast", "chicken-thigh", "salmon", "shrimp", "tuna"].includes(item.ingredientId)));
+    return hitQuery && hitTag;
+  });
+
+  function openPicker(recipeId = currentRecipe.id) {
+    setPickerRecipeId(recipeId);
+    setPickerOpen(true);
+  }
+
+  function confirmPicker() {
+    onSetLunch(dayIndex, pickerRecipeId);
+    onSelectRecipe(pickerRecipeId);
+    setPickerOpen(false);
+  }
+
+  return (
+    <section className="mx-auto max-w-md px-4 pb-28 pt-4 lg:hidden">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#7f966b]">WEEK PLAN</p>
+          <h1 className="mt-1 font-serif text-3xl text-[#2f4328]">菜单库</h1>
+        </div>
+        <button className="grid h-11 w-11 place-items-center rounded-full bg-[#f2eadc]" aria-label="筛选">
+          <SlidersHorizontal className="h-5 w-5 text-[#45513e]" />
+        </button>
+      </div>
+
+      <div className="-mx-4 mt-4 flex snap-x gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {mealPlan.map((day, index) => {
+          const recipe = recipes.find((item) => item.id === day.lunchRecipeId) ?? recipes[0];
+          const active = index === dayIndex;
+          return (
+            <button key={day.date} onClick={() => setDayIndex(index)} className={`w-[88px] shrink-0 snap-start rounded-[20px] border p-2 text-center ${active ? "border-[#6f835e] bg-[#f3f7ed]" : "border-[#ece6dc] bg-white"}`}>
+              <span className="text-xs font-semibold">{day.date}</span>
+              <RecipeImage recipe={recipe} className="mx-auto mt-2 h-12 w-12 rounded-full" />
+              <b className="mt-2 line-clamp-2 block text-[10px] leading-tight">{shortName(recipe.name)}</b>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="rounded-[24px] border border-[#ece6dc] bg-white p-4 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs text-[#777568]">正在安排 {activeDay.date}</p>
+            <h2 className="mt-1 font-serif text-xl text-[#2f4328]">{currentRecipe.name}</h2>
+          </div>
+          <button onClick={() => openPicker()} className="min-h-11 rounded-full bg-[#6f835e] px-4 text-sm font-semibold text-white">更换</button>
+        </div>
+      </div>
+
+      <label className="mt-4 flex min-h-11 items-center gap-2 rounded-full bg-white px-4 text-sm text-[#777568] shadow-inner">
+        <Search className="h-4 w-4" />
+        <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索菜单 / 食材" className="min-w-0 flex-1 bg-transparent outline-none" />
+      </label>
+
+      <div className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {tags.map((item) => (
+          <button key={item} onClick={() => setTag(item)} className={`min-h-9 shrink-0 rounded-full px-4 text-xs font-semibold ${tag === item ? "bg-[#6f835e] text-white" : "bg-[#f1eadf] text-[#665f52]"}`}>
+            {item}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-3 grid grid-cols-2 gap-3">
+        {filtered.map((recipe) => (
+          <button key={recipe.id} onClick={() => openPicker(recipe.id)} className="overflow-hidden rounded-[18px] border border-[#ece6dc] bg-white text-left shadow-[0_10px_26px_rgba(70,63,48,.06)]">
+            <RecipeImage recipe={recipe} className="h-28" />
+            <div className="p-3">
+              <h2 className="line-clamp-1 font-semibold">{recipe.name}</h2>
+              <div className="mt-2 flex flex-wrap gap-1">
+                {recipe.tags.slice(0, 2).map((item) => <span key={item} className="rounded-full bg-[#eef3e7] px-2 py-0.5 text-[10px] text-[#5d7056]">{item}</span>)}
+              </div>
+              <p className="mt-2 text-xs text-[#777568]"><Clock3 className="mr-1 inline h-3.5 w-3.5" />{recipe.prepTime + recipe.cookTime} 分钟</p>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {pickerOpen && (
+        <MobileRecipePicker
+          currentRecipe={currentRecipe}
+          day={activeDay}
+          onCancel={() => setPickerOpen(false)}
+          onConfirm={confirmPicker}
+          onSelect={setPickerRecipeId}
+          selectedRecipeId={pickerRecipeId}
+        />
+      )}
+    </section>
   );
 }
 

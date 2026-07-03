@@ -2,7 +2,7 @@ import { BookOpen, Compass, Feather, Flower2, Gem, Moon, PenLine, Shell, Sparkle
 
 export const navLinks = [
   { href: "/", label: "首页" },
-  { href: "/#week-plan", label: "一周菜单" },
+  { href: "/week-plan", label: "一周菜单" },
   { href: "/ingredients", label: "食材库" },
   { href: "/#shopping", label: "购物清单" },
   { href: "/#history", label: "我的记录" }
