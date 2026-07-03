@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -138,6 +138,8 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" })
   const todayRecipe = recipes.find((recipe) => recipe.id === today.lunchRecipeId) ?? recipes[0];
   const tomorrowRecipe = recipes.find((recipe) => recipe.id === tomorrow.lunchRecipeId) ?? recipes[1];
   const activeRecipe = recipes.find((recipe) => recipe.id === activeRecipeId) ?? todayRecipe;
+  const activeDayIndex = Math.max(0, store.mealPlan.findIndex((day) => day.lunchRecipeId === activeRecipe.id));
+  const activeDay = store.mealPlan[activeDayIndex] ?? today;
   const tomorrowMissing = missingForRecipe(tomorrowRecipe, store.ingredients);
   const recommendations = useMemo(
     () => recipes.map((recipe) => ({ recipe, meta: recipeScore(recipe, store.ingredients) })).sort((a, b) => b.meta.score - a.meta.score).slice(0, 3),
@@ -275,7 +277,26 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" })
 
   return (
     <main className="min-h-screen bg-[#fbfaf6] text-[#2f332c]">
-      <section className="mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6">
+      {view === "home" && (
+        <MobileHome
+          activeDay={activeDay}
+          activeDayIndex={activeDayIndex}
+          activeRecipe={activeRecipe}
+          completion={completion}
+          ingredients={store.ingredients}
+          mealPlan={store.mealPlan}
+          onComplete={() => setPendingRecipe(activeRecipe)}
+          onSelectRecipe={setActiveRecipeId}
+          onUndo={undoLastDeduct}
+          store={store}
+          today={today}
+          todayRecipe={todayRecipe}
+          tomorrow={tomorrow}
+          tomorrowMissing={tomorrowMissing}
+          tomorrowRecipe={tomorrowRecipe}
+        />
+      )}
+      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view === "home" ? "hidden lg:block" : "pb-28 md:pb-14"}`}>
         <div className="grid gap-5 lg:grid-cols-[.72fr_1.28fr]">
           <div className="rounded-[14px] border border-[#ece6dc] bg-white p-8 shadow-[0_16px_42px_rgba(70,63,48,.08)]">
             <h1 className="font-serif text-[27px] leading-tight text-[#2f4328]">Good morning, Selene <span className="text-[#7f966b]">枝</span></h1>
@@ -436,6 +457,232 @@ function MealPill({ icon, label, value, done, active }: { icon: "sun" | "sun-hot
   );
 }
 
+function MobileHome({
+  activeDay,
+  activeDayIndex,
+  activeRecipe,
+  completion,
+  ingredients,
+  mealPlan,
+  onComplete,
+  onSelectRecipe,
+  onUndo,
+  store,
+  today,
+  todayRecipe,
+  tomorrow,
+  tomorrowMissing,
+  tomorrowRecipe
+}: {
+  activeDay: MealPlan;
+  activeDayIndex: number;
+  activeRecipe: Recipe;
+  completion: number;
+  ingredients: Ingredient[];
+  mealPlan: MealPlan[];
+  onComplete: () => void;
+  onSelectRecipe: (recipeId: string) => void;
+  onUndo: () => void;
+  store: Store;
+  today: MealPlan;
+  todayRecipe: Recipe;
+  tomorrow: MealPlan;
+  tomorrowMissing: Array<{ name: string; missing: number; unit: string }>;
+  tomorrowRecipe: Recipe;
+}) {
+  const keyItems = ["milk", "egg", "spinach", "blueberry", "yogurt", "banana"]
+    .map((key) => ingredients.find((item) => item.id === key))
+    .filter(Boolean) as Ingredient[];
+  const steamRecipe = recipes.find((recipe) => recipe.id === "shrimp-corn-egg") ?? activeRecipe;
+
+  return (
+    <section className="mx-auto max-w-md px-4 pb-28 pt-4 lg:hidden">
+      <div className="grid grid-cols-2 gap-3">
+        <MobilePlanSummary title="今天计划" badge="今天" plan={today} recipe={todayRecipe} tone="green" />
+        <MobilePlanSummary
+          title="明天计划"
+          badge="明天"
+          ingredients={ingredients}
+          missing={tomorrowMissing}
+          plan={tomorrow}
+          recipe={tomorrowRecipe}
+          tone="amber"
+        />
+      </div>
+
+      <MobileRecipeHero
+        canUndo={Boolean(store.lastDeduct?.length)}
+        day={activeDay}
+        onComplete={onComplete}
+        onUndo={onUndo}
+        recipe={activeRecipe}
+      />
+
+      <section id="week-plan" className="mt-5">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="font-serif text-lg text-[#2f4328]">本周菜单</h2>
+          <button className="min-h-11 rounded-full px-3 text-xs font-semibold text-[#6f835e]">更换</button>
+        </div>
+        <div className="-mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {mealPlan.map((day, index) => {
+            const recipe = recipes.find((item) => item.id === day.lunchRecipeId) ?? recipes[0];
+            const active = recipe.id === activeRecipe.id;
+            return (
+              <button
+                key={day.date}
+                onClick={() => onSelectRecipe(recipe.id)}
+                className={`min-h-36 w-[86px] shrink-0 snap-center rounded-[22px] border p-2 text-center transition ${active ? "scale-105 border-[#6f835e] bg-[#f3f7ed] shadow-[0_12px_30px_rgba(95,122,79,.16)]" : "border-[#ece6dc] bg-white/80 opacity-80"}`}
+              >
+                <span className="block text-xs font-semibold text-[#5d6558]">{day.date}</span>
+                <span className="mt-1 block text-[10px] text-[#9a9488]">6/{9 + index}</span>
+                <RecipeImage recipe={recipe} className="mx-auto mt-2 h-14 w-14 rounded-full" />
+                <b className="mt-2 line-clamp-2 block text-[11px] leading-tight">{shortName(recipe.name)}</b>
+                {index === 2 && <span className="mt-1 inline-block rounded-full bg-[#6f835e] px-2 py-0.5 text-[10px] text-white">今天</span>}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mt-3">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="font-serif text-lg text-[#2f4328]">库存提醒</h2>
+          <Link href="/ingredients" className="min-h-11 rounded-full px-3 py-3 text-xs font-semibold text-[#6f835e]">查看全部 &gt;</Link>
+        </div>
+        <div className="-mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {keyItems.map((item) => <MobileInventoryCard key={item.id} item={item} />)}
+        </div>
+      </section>
+
+      <section id="shopping" className="mt-3 grid grid-cols-2 gap-3">
+        <div id="steam" className="rounded-[22px] border border-[#ece6dc] bg-white p-3 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
+          <div className="flex items-center justify-between">
+            <h2 className="font-serif text-base text-[#2f4328]">今天蒸什么</h2>
+            <span className="rounded-full bg-[#e6ecd8] px-2 py-1 text-[10px] text-[#6f835e]">蒸着吃</span>
+          </div>
+          <RecipeImage recipe={steamRecipe} className="mt-3 h-24 rounded-2xl" />
+          <h3 className="mt-3 line-clamp-1 font-semibold">{steamRecipe.name}</h3>
+          <p className="mt-1 text-xs text-[#777568]">准备 5 分钟 · 蒸 15 分钟</p>
+        </div>
+        <div className="rounded-[22px] border border-[#ece6dc] bg-white p-3 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
+          <h2 className="font-serif text-base text-[#2f4328]">今日完成度</h2>
+          <div className="mt-4 grid place-items-center">
+            <MobileProgress value={completion * 25} />
+          </div>
+          <div className="mt-3 space-y-2 text-xs text-[#6c7065]">
+            <MobileCheck label="早餐" done={today.completedStatus.breakfast} />
+            <MobileCheck label="午餐" done={today.completedStatus.lunch} />
+            <MobileCheck label="待完成" done={today.completedStatus.snack} />
+            <MobileCheck label="晚餐" done={today.completedStatus.dinner} />
+          </div>
+        </div>
+      </section>
+    </section>
+  );
+}
+
+function MobilePlanSummary({ title, badge, ingredients = defaultIngredients, plan, recipe, tone, missing = [] }: { title: string; badge: string; ingredients?: Ingredient[]; plan: MealPlan; recipe: Recipe; tone: "green" | "amber"; missing?: Array<{ name: string; missing: number; unit: string }> }) {
+  const green = tone === "green";
+  return (
+    <section className={`min-h-[214px] rounded-[20px] border p-3 shadow-[0_12px_30px_rgba(70,63,48,.06)] ${green ? "border-[#dce5d6] bg-white" : "border-[#efe1c7] bg-[#fff9ea]"}`}>
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <h2 className="font-serif text-lg text-[#2f4328]">{title}</h2>
+          <p className="mt-0.5 text-[11px] text-[#8c887a]">{plan.date} · 6月</p>
+        </div>
+        <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold text-white ${green ? "bg-[#6f835e]" : "bg-[#e2a822]"}`}>{badge}</span>
+      </div>
+      <div className="mt-4 space-y-2 text-[11px] leading-tight text-[#3f443c]">
+        <MobileMealLine icon={<Coffee className="h-3.5 w-3.5" />} label="早餐" value={plan.breakfast} />
+        <MobileMealLine icon={<ShoppingBasket className="h-3.5 w-3.5" />} label="午餐" value={recipe.name} />
+        <MobileMealLine icon={<Sun className="h-3.5 w-3.5" />} label="下午加餐" value={plan.snack} />
+        <MobileMealLine icon={<Moon className="h-3.5 w-3.5" />} label="晚餐" value={plan.dinnerStatus} />
+      </div>
+      {!green && (
+        <div className="mt-3 space-y-1 text-[11px] text-[#8a6b27]">
+          <p className="font-semibold">提前准备</p>
+          <p className="line-clamp-1">· {prepTips(recipe)[0]}</p>
+          <p className="line-clamp-1 font-semibold text-[#b06b38]">缺少：{missing[0] ? `${missing[0].name} ${missing[0].missing}${missing[0].unit}` : "无"}</p>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#eee5d6]"><span className="block h-full rounded-full bg-[#6f835e]" style={{ width: `${availablePercent(recipe, ingredients)}%` }} /></div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function MobileMealLine({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
+  return (
+    <div className="grid grid-cols-[16px_34px_1fr] items-center gap-1">
+      <span className="text-[#6f835e]">{icon}</span>
+      <span className="text-[#8c887a]">{label}</span>
+      <b className="truncate font-semibold">{value}</b>
+    </div>
+  );
+}
+
+function MobileRecipeHero({ canUndo, day, onComplete, onUndo, recipe }: { canUndo: boolean; day: MealPlan; onComplete: () => void; onUndo: () => void; recipe: Recipe }) {
+  return (
+    <section className="relative mt-4 h-[420px] overflow-hidden rounded-[26px] border border-[#ece6dc] bg-[#eee6d8] shadow-[0_18px_42px_rgba(70,63,48,.12)]">
+      <RecipeImage recipe={recipe} className="h-full" />
+      <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-[#fffaf0]/95 via-[#fffaf0]/72 to-transparent p-5">
+        <p className="font-serif text-xs uppercase tracking-[.18em] text-[#607052]">TODAY&apos;S TABLE</p>
+        <div className="mt-3 flex items-center gap-2">
+          <h1 className="font-serif text-3xl leading-tight text-[#1f241e]">{recipe.name}</h1>
+          <span className="rounded-full bg-white/70 px-2 py-1 text-[11px] text-[#6f835e]">{day.date}</span>
+        </div>
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {recipe.tags.slice(0, 4).map((tag) => <span key={tag} className="rounded-full bg-[#eef3e7]/90 px-2 py-1 text-[11px] text-[#5d7056]">{tag}</span>)}
+        </div>
+      </div>
+      <div className="absolute inset-x-4 bottom-4">
+        <div className="mb-3 grid grid-cols-2 rounded-2xl bg-white/82 text-center text-xs text-[#777568] backdrop-blur">
+          <span className="border-r border-[#e9dfcf] py-3"><Clock3 className="mr-1 inline h-4 w-4 text-[#9dad8f]" />准备 <b className="text-[#2f332c]">{recipe.prepTime} 分钟</b></span>
+          <span className="py-3"><Clock3 className="mr-1 inline h-4 w-4 text-[#9dad8f]" />烹饪 <b className="text-[#2f332c]">{recipe.cookTime} 分钟</b></span>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <a href="#steam" className="grid min-h-11 place-items-center rounded-full bg-white/92 text-sm font-semibold text-[#5f7a4f]">查看做法</a>
+          <button onClick={onComplete} className="min-h-11 rounded-full bg-[#6f835e] px-3 text-sm font-semibold text-white">完成并扣库存</button>
+        </div>
+        {canUndo && <button onClick={onUndo} className="mt-2 min-h-11 w-full rounded-full bg-[#f0eadf]/95 text-sm text-[#4f554b]">撤销本次扣减</button>}
+      </div>
+    </section>
+  );
+}
+
+function MobileInventoryCard({ item }: { item: Ingredient }) {
+  const [label, color] = status(item);
+  return (
+    <Link href="/ingredients" className="min-h-[148px] w-[106px] shrink-0 snap-start rounded-[20px] border border-[#ece6dc] bg-white p-3 shadow-[0_12px_30px_rgba(70,63,48,.05)]">
+      <IngredientImage ingredient={item} className="mx-auto h-12 w-16 rounded-xl" />
+      <h3 className="mt-2 truncate text-sm font-semibold">{item.name}</h3>
+      <p className="mt-1 text-[11px] text-[#777568]">{item.currentQuantity}{item.unit} / {item.initialQuantity}{item.unit}</p>
+      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#efe8dc]"><span className="block h-full rounded-full bg-[#6f835e]" style={{ width: `${pct(item)}%` }} /></div>
+      <span className={`mt-2 inline-block rounded-full px-2 py-1 text-[10px] ${color}`}>{label}</span>
+    </Link>
+  );
+}
+
+function MobileProgress({ value }: { value: number }) {
+  return (
+    <div className="grid h-20 w-20 place-items-center rounded-full bg-[conic-gradient(#6f835e_var(--value),#ece6dc_0)] p-2" style={{ "--value": `${value}%` } as CSSProperties}>
+      <div className="grid h-full w-full place-items-center rounded-full bg-white font-serif text-xl font-semibold text-[#2f4328]">{value}%</div>
+    </div>
+  );
+}
+
+function MobileCheck({ label, done }: { label: string; done: boolean }) {
+  return (
+    <div className="flex items-center justify-between">
+      <span>{label}</span>
+      <Check className={`h-3.5 w-3.5 ${done ? "text-[#6f835e]" : "text-[#c9c2b5]"}`} />
+    </div>
+  );
+}
+
+function shortName(name: string) {
+  return name.length > 7 ? `${name.slice(0, 7)}…` : name;
+}
+
 function PlanCard({
   title,
   day,
@@ -568,8 +815,9 @@ function ImageFallback({ label, className }: { label: string; className: string 
 
 function DeductDialog({ recipe, onCancel, onConfirm }: { recipe: Recipe; onCancel: () => void; onConfirm: () => void }) {
   return (
-    <div className="fixed inset-0 z-[80] grid place-items-center bg-[#2f332c]/35 px-4 backdrop-blur-sm">
-      <section className="w-full max-w-lg rounded-[18px] border border-[#ece6dc] bg-[#fffdf8] p-5 shadow-[0_24px_80px_rgba(47,51,44,.24)]">
+    <div className="fixed inset-0 z-[80] grid place-items-end bg-[#2f332c]/35 px-3 pb-3 backdrop-blur-sm md:place-items-center md:px-4 md:pb-0">
+      <section className="w-full max-w-lg rounded-[28px] border border-[#ece6dc] bg-[#fffdf8] p-5 pb-[calc(env(safe-area-inset-bottom)+20px)] shadow-[0_24px_80px_rgba(47,51,44,.24)] md:rounded-[18px] md:pb-5">
+        <div className="mx-auto mb-4 h-1 w-12 rounded-full bg-[#d8d0c2] md:hidden" />
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[.22em] text-[#8b947f]">AUTO DEDUCT</p>
