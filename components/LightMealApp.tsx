@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   CalendarDays,
@@ -31,8 +32,8 @@ import {
   Recipe,
   recipes
 } from "@/lib/meal-data";
-import { ingredientImages } from "@/src/data/ingredientImages";
-import { recipeImages } from "@/src/data/recipeImages";
+import { ingredientImageMap } from "@/src/data/ingredientImageMap";
+import { recipeImageMap } from "@/src/data/recipeImageMap";
 
 const storeKey = "light-meal-calendar-v1";
 const tabs = ["家里库存", "食材分类", "保质期提醒", "历史记录"];
@@ -533,25 +534,44 @@ function RecipeHero({ recipe, onComplete, onUndo, canUndo }: { recipe: Recipe; o
 }
 
 function RecipeImage({ recipe, className }: { recipe: Recipe; className: string }) {
-  const image = recipeImages[recipe.id];
-  if (!image) return <ImageFallback label={recipe.name} className={className} />;
+  const image = recipeImageMap[recipe.id];
+  const [failed, setFailed] = useState(false);
+  if (!image || image.status !== "approved" || failed) return <RecipeImagePlaceholder label={recipe.name} className={className} />;
   return (
-    <img src={image.src} alt={image.alt} className={`${className} w-full object-cover`} loading="lazy" />
+    <Image src={image.src} alt={image.alt} width={960} height={600} className={`${className} w-full object-cover`} onError={() => setFailed(true)} />
   );
 }
 
 function IngredientImage({ ingredient, className }: { ingredient: Ingredient; className: string }) {
-  const image = ingredientImages[ingredient.id];
-  if (!image) return <ImageFallback label={ingredient.name} className={className} />;
+  const image = ingredientImageMap[ingredient.id];
+  const [failed, setFailed] = useState(false);
+  if (!image || image.status !== "approved" || failed) return <IngredientImagePlaceholder label={ingredient.name} className={className} />;
   return (
-    <img src={image.src} alt={image.alt} className={`${className} object-cover`} loading="lazy" />
+    <Image src={image.src} alt={image.alt} width={560} height={420} className={`${className} object-cover`} onError={() => setFailed(true)} />
   );
 }
 
-function ImageFallback({ label, className }: { label: string; className: string }) {
+function RecipeImagePlaceholder({ label, className }: { label: string; className: string }) {
   return (
-    <div className={`${className} grid place-items-center bg-[#f3efe2] text-center text-sm font-semibold text-[#6f835e]`}>
-      <span>{label}</span>
+    <div className={`${className} grid place-items-center overflow-hidden bg-[#fbf8ef] text-center text-sm font-semibold text-[#6f835e]`}>
+      <div className="px-4">
+        <div className="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-full border border-[#c8d3be]">
+          <ChefHat className="h-7 w-7" />
+        </div>
+        <span className="block">{label}</span>
+        <span className="mt-1 block text-xs font-normal text-[#8b947f]">图片待确认</span>
+      </div>
+    </div>
+  );
+}
+
+function IngredientImagePlaceholder({ label, className }: { label: string; className: string }) {
+  return (
+    <div className={`${className} grid place-items-center overflow-hidden bg-[#fbf8ef] text-center text-xs font-semibold text-[#6f835e]`}>
+      <span className="px-2">
+        <Sprout className="mx-auto mb-1 h-5 w-5" />
+        {label}
+      </span>
     </div>
   );
 }

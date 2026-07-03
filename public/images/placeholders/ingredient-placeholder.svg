@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="420" viewBox="0 0 560 420">
+  <rect width="560" height="420" rx="36" fill="#fbf8ef"/>
+  <ellipse cx="280" cy="316" rx="150" ry="34" fill="#e9dfcf"/>
+  <path d="M230 230 C240 170 318 150 352 204 C330 242 274 262 230 230Z" fill="none" stroke="#6f835e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M248 224 C280 214 314 202 344 170" stroke="#6f835e" stroke-width="8" stroke-linecap="round" opacity=".75"/>
+  <text x="280" y="360" text-anchor="middle" font-size="30" fill="#2f4328" font-family="PingFang SC,serif">食材图片待补充</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600">
+  <rect width="960" height="600" rx="42" fill="#fbf8ef"/>
+  <path d="M0 420 C180 370 320 500 520 420 C700 348 820 380 960 320 L960 600 L0 600Z" fill="#eee8dc"/>
+  <ellipse cx="560" cy="292" rx="220" ry="118" fill="#d8c9ac"/>
+  <ellipse cx="560" cy="270" rx="204" ry="104" fill="#fffaf0"/>
+  <path d="M475 254 C510 224 582 224 626 258" fill="none" stroke="#6f835e" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="520" cy="292" r="26" fill="#e7aa2e"/>
+  <circle cx="585" cy="292" r="26" fill="#d76b57"/>
+  <path d="M675 426 L850 326" stroke="#8d6746" stroke-width="10" stroke-linecap="round"/>
+  <path d="M658 402 L834 304" stroke="#8d6746" stroke-width="7" stroke-linecap="round" opacity=".7"/>
+  <text x="92" y="140" font-size="34" fill="#2f4328" font-family="Georgia,serif">Recipe image pending</text>
+  <text x="92" y="190" font-size="24" fill="#6f835e" font-family="PingFang SC,Arial">图片待确认</text>
+</svg>
