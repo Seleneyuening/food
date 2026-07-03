@@ -51,6 +51,13 @@ export default function ImageReviewPage() {
                   ))}
                 </div>
                 <p className="mt-3 break-all rounded-lg bg-[#fbfaf6] p-3 text-xs text-[#777568]">{image?.src ?? "未配置图片路径"}</p>
+                {image?.source && (
+                  <p className="mt-2 break-all rounded-lg bg-[#fbfaf6] p-3 text-xs text-[#777568]">
+                    Source: {image.source}
+                    {image.credit ? ` · ${image.credit}` : ""}
+                  </p>
+                )}
+                {image?.note && <p className="mt-2 text-xs text-[#9b4d45]">{image.note}</p>}
                 <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
                   <button className="rounded-full border border-[#c8d3be] px-4 py-2 text-[#536f56]">正确</button>
                   <button className="rounded-full border border-[#e1c7bd] px-4 py-2 text-[#9b4d45]">需要替换</button>
