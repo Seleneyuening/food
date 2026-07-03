@@ -44,10 +44,10 @@ export const recipeImages: Record<string, ImageAsset> = Object.fromEntries(
     id,
     {
       id,
-      src: `/images/recipes/${id}.svg`,
+      src: `/images/recipes/${id}.jpg`,
       alt: `${name}成品图`,
-      source: "Local generated asset",
-      credit: "Aster Shore"
+      source: "User-provided 30 dish reference image",
+      credit: "Selene"
     }
   ])
 );

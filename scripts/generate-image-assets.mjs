@@ -115,8 +115,7 @@ function ingredientSvg(name, color) {
 </svg>`;
 }
 
-await mkdir("public/images/recipes", { recursive: true });
 await mkdir("public/images/ingredients", { recursive: true });
 
-await Promise.all(recipes.map(([id, name, parts]) => writeFile(`public/images/recipes/${id}.svg`, recipeSvg(name, parts))));
+// Recipe photos now come from the fixed user-provided dish reference image.
 await Promise.all(ingredients.map(([id, name, color]) => writeFile(`public/images/ingredients/${id}.svg`, ingredientSvg(name, color))));
