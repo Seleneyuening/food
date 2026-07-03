@@ -6,57 +6,16 @@ export type RecipeImageAsset = {
   status: ImageStatus;
   keyIngredients: string[];
   note?: string;
-  source?: string;
-  credit?: string;
 };
 
-export const recipeImageMap: Record<string, RecipeImageAsset> = {
-  "beef-pepper-rice": {
-    src: "/images/recipes/beef-pepper-rice-bowl.jpg",
-    alt: "牛肉胡椒饭，包含牛肉、米饭和玉米",
-    status: "needs-review",
-    keyIngredients: ["牛肉", "米饭", "玉米"],
-    note: "真实照片来自 Wikimedia Commons，但图中不是红黄彩椒，需确认是否接受。",
-    source: "https://commons.wikimedia.org/wiki/File:Beef_Pepper_Rice_of_Pepper_Lunch_(2).jpg",
-    credit: "Wikimedia Commons"
-  },
-  "salmon-avocado-rice": {
-    src: "/images/recipes/salmon-avocado-rice-bowl.jpg",
-    alt: "三文鱼牛油果饭，包含三文鱼、牛油果、米饭和绿色蔬菜",
-    status: "approved",
-    keyIngredients: ["三文鱼", "牛油果", "米饭"],
-    source: "https://commons.wikimedia.org/wiki/File:Salmon_Poke.jpg",
-    credit: "Pokebros / Wikimedia Commons"
-  },
-  "shrimp-broccoli-fried-rice": {
-    src: "/images/recipes/shrimp-broccoli-rice.jpg",
-    alt: "虾仁西兰花炒饭，包含虾仁、西兰花和米饭",
-    status: "approved",
-    keyIngredients: ["虾仁", "西兰花", "米饭"],
-    source: "https://commons.wikimedia.org/wiki/File:Shrimp_with_chili_garlic_paste,_stir_fried_broccoli,_fried_rice,_and_dumplings_(6306839645).jpg",
-    credit: "Wikimedia Commons"
-  },
-  "tomato-chicken-pasta": {
-    src: "/images/recipes/tomato-chicken-pasta.jpg",
-    alt: "番茄鸡肉意面，包含鸡肉、番茄酱和意面",
-    status: "approved",
-    keyIngredients: ["番茄", "鸡肉", "意面"],
-    source: "https://commons.wikimedia.org/wiki/File:Tomato_cream_sauce_on_pasta_and_chicken.jpg",
-    credit: "Wikimedia Commons"
-  },
-  "beef-broccoli-brown-rice": {
-    src: "/images/recipes/beef-broccoli-brown-rice.jpg",
-    alt: "牛肉西兰花盖饭，包含牛肉、西兰花和米饭",
-    status: "needs-review",
-    keyIngredients: ["牛肉", "西兰花", "米饭"],
-    note: "真实照片含牛肉、西兰花和米饭，但不能确认米饭是糙米。",
-    source: "https://commons.wikimedia.org/wiki/File:Beef_and_Broccoli_over_rice_-yummy_-cookingday_-cookingistherapy_-beefandbroccoli_-foodbloggers_-cookingblog_thank_you_%40dianabrowne2_for_the_recipe.jpg",
-    credit: "Monica Zorrilla Photography / Wikimedia Commons"
-  },
-  ...Object.fromEntries(([
+const recipeRows = [
+  ["beef-pepper-rice", "beef-pepper-rice.svg", "牛肉彩椒饭，包含牛肉、红黄彩椒和米饭", ["牛肉", "彩椒", "米饭"]],
   ["chicken-quinoa-salad", "chicken-quinoa-salad.svg", "鸡胸肉藜麦沙拉，包含鸡胸肉、藜麦和蔬菜", ["鸡胸肉", "藜麦", "生菜"]],
+  ["salmon-avocado-rice", "salmon-avocado-rice.svg", "三文鱼牛油果饭，包含三文鱼、牛油果、米饭和绿色蔬菜", ["三文鱼", "牛油果", "米饭"]],
+  ["shrimp-broccoli-fried-rice", "shrimp-broccoli-fried-rice.svg", "虾仁西兰花炒饭，包含虾仁、西兰花、鸡蛋和米饭", ["虾仁", "西兰花", "米饭"]],
   ["egg-tofu-soba", "egg-tofu-soba.svg", "鸡蛋豆腐拌荞麦面，包含鸡蛋、豆腐和荞麦面", ["鸡蛋", "豆腐", "荞麦面"]],
   ["tuna-veggie-rice", "tuna-veggie-rice.svg", "金枪鱼蔬菜饭，包含金枪鱼、蔬菜和米饭", ["金枪鱼", "蔬菜", "米饭"]],
+  ["tomato-chicken-pasta", "tomato-chicken-pasta.svg", "番茄鸡肉意面，包含番茄、鸡肉和意面", ["番茄", "鸡肉", "意面"]],
   ["teriyaki-chicken-rice", "teriyaki-chicken-rice.svg", "日式照烧鸡腿饭，包含鸡腿肉、蔬菜和米饭", ["鸡腿肉", "西兰花", "米饭"]],
   ["beef-onion-don", "beef-onion-don.svg", "牛肉洋葱盖饭，包含牛肉、洋葱和米饭", ["牛肉", "洋葱", "米饭"]],
   ["shrimp-corn-egg", "shrimp-corn-egg.svg", "虾仁玉米蒸蛋，包含虾仁、玉米和鸡蛋", ["虾仁", "玉米", "鸡蛋"]],
@@ -71,6 +30,7 @@ export const recipeImageMap: Record<string, RecipeImageAsset> = {
   ["tofu-shrimp-soup", "tofu-shrimp-soup.svg", "豆腐虾仁蔬菜汤，包含豆腐、虾仁和菠菜", ["豆腐", "虾仁", "菠菜"]],
   ["chicken-mushroom-pasta", "chicken-mushroom-pasta.svg", "鸡胸肉蘑菇意面，包含鸡胸肉、蘑菇和意面", ["鸡胸肉", "菌菇", "意面"]],
   ["tuna-egg-salad-bowl", "tuna-egg-salad-bowl.svg", "金枪鱼鸡蛋沙拉碗，包含金枪鱼、鸡蛋和蔬菜", ["金枪鱼", "鸡蛋", "蔬菜"]],
+  ["beef-broccoli-brown-rice", "beef-broccoli-brown-rice.svg", "牛肉西兰花糙米饭，包含牛肉、西兰花和糙米饭", ["牛肉", "西兰花", "糙米"]],
   ["shrimp-tofu-egg-rice", "shrimp-tofu-egg-rice.svg", "虾仁豆腐蒸蛋饭，包含虾仁、豆腐、鸡蛋和米饭", ["虾仁", "豆腐", "鸡蛋"]],
   ["tomato-egg-chicken-rice", "tomato-egg-chicken-rice.svg", "番茄鸡蛋鸡肉饭，包含番茄、鸡蛋、鸡肉和米饭", ["番茄", "鸡蛋", "鸡肉"]],
   ["chicken-pepper-pumpkin", "chicken-pepper-pumpkin.svg", "鸡腿肉彩椒南瓜盘，包含鸡腿肉、彩椒和南瓜", ["鸡腿肉", "彩椒", "南瓜"]],
@@ -79,14 +39,17 @@ export const recipeImageMap: Record<string, RecipeImageAsset> = {
   ["tofu-beef-veggie-pot", "tofu-beef-veggie-pot.svg", "豆腐牛肉蔬菜锅，包含豆腐、牛肉和蔬菜", ["豆腐", "牛肉", "西兰花"]],
   ["shrimp-avocado-salad", "shrimp-avocado-salad.svg", "虾仁牛油果沙拉，包含虾仁、牛油果和生菜", ["虾仁", "牛油果", "生菜"]],
   ["chicken-tomato-soba", "chicken-tomato-soba.svg", "鸡胸肉番茄荞麦面，包含鸡胸肉、番茄和荞麦面", ["鸡胸肉", "番茄", "荞麦面"]]
-] as const).map(([id, fileName, alt, keyIngredients]) => [
+] as const;
+
+export const recipeImageMap: Record<string, RecipeImageAsset> = Object.fromEntries(
+  recipeRows.map(([id, fileName, alt, keyIngredients]) => [
     id,
     {
       src: `/images/recipes/${fileName}`,
       alt,
-      status: "placeholder",
+      status: "needs-review",
       keyIngredients: [...keyIngredients],
-      note: "尚未找到严格匹配的可复用真实照片，正式页面显示占位图。"
+      note: "本地固定审核资产，未人工确认前不在正式卡片中展示。"
     }
-  ]))
-};
+  ])
+);
