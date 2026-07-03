@@ -287,6 +287,7 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" })
           mealPlan={store.mealPlan}
           onComplete={() => setPendingRecipe(activeRecipe)}
           onSelectRecipe={setActiveRecipeId}
+          onSetLunch={setLunch}
           onUndo={undoLastDeduct}
           store={store}
           today={today}
@@ -466,6 +467,7 @@ function MobileHome({
   mealPlan,
   onComplete,
   onSelectRecipe,
+  onSetLunch,
   onUndo,
   store,
   today,
@@ -482,6 +484,7 @@ function MobileHome({
   mealPlan: MealPlan[];
   onComplete: () => void;
   onSelectRecipe: (recipeId: string) => void;
+  onSetLunch: (dayIndex: number, recipeId: string) => void;
   onUndo: () => void;
   store: Store;
   today: MealPlan;
@@ -494,6 +497,21 @@ function MobileHome({
     .map((key) => ingredients.find((item) => item.id === key))
     .filter(Boolean) as Ingredient[];
   const steamRecipe = recipes.find((recipe) => recipe.id === "shrimp-corn-egg") ?? activeRecipe;
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerDayIndex, setPickerDayIndex] = useState(activeDayIndex);
+  const [pickerRecipeId, setPickerRecipeId] = useState(activeRecipe.id);
+
+  function openPicker(dayIndex: number, recipeId: string) {
+    setPickerDayIndex(dayIndex);
+    setPickerRecipeId(recipeId);
+    setPickerOpen(true);
+  }
+
+  function confirmPicker() {
+    onSetLunch(pickerDayIndex, pickerRecipeId);
+    onSelectRecipe(pickerRecipeId);
+    setPickerOpen(false);
+  }
 
   return (
     <section className="mx-auto max-w-md px-4 pb-28 pt-4 lg:hidden">
@@ -521,7 +539,7 @@ function MobileHome({
       <section id="week-plan" className="mt-5">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-serif text-lg text-[#2f4328]">本周菜单</h2>
-          <button className="min-h-11 rounded-full px-3 text-xs font-semibold text-[#6f835e]">更换</button>
+          <button onClick={() => openPicker(activeDayIndex, activeRecipe.id)} className="min-h-11 rounded-full px-3 text-xs font-semibold text-[#6f835e]">更换</button>
         </div>
         <div className="-mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {mealPlan.map((day, index) => {
@@ -537,7 +555,16 @@ function MobileHome({
                 <span className="mt-1 block text-[10px] text-[#9a9488]">6/{9 + index}</span>
                 <RecipeImage recipe={recipe} className="mx-auto mt-2 h-14 w-14 rounded-full" />
                 <b className="mt-2 line-clamp-2 block text-[11px] leading-tight">{shortName(recipe.name)}</b>
-                {index === 2 && <span className="mt-1 inline-block rounded-full bg-[#6f835e] px-2 py-0.5 text-[10px] text-white">今天</span>}
+                {active && <span className="mt-1 inline-block rounded-full bg-[#6f835e] px-2 py-0.5 text-[10px] text-white">今天</span>}
+                <span
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    openPicker(index, recipe.id);
+                  }}
+                  className="mt-1 inline-block min-h-6 rounded-full px-2 py-1 text-[10px] text-[#6f835e]"
+                >
+                  更换
+                </span>
               </button>
             );
           })}
@@ -577,7 +604,95 @@ function MobileHome({
           </div>
         </div>
       </section>
+      {pickerOpen && (
+        <MobileRecipePicker
+          currentRecipe={recipes.find((recipe) => recipe.id === mealPlan[pickerDayIndex]?.lunchRecipeId) ?? activeRecipe}
+          day={mealPlan[pickerDayIndex] ?? activeDay}
+          onCancel={() => setPickerOpen(false)}
+          onConfirm={confirmPicker}
+          onSelect={setPickerRecipeId}
+          selectedRecipeId={pickerRecipeId}
+        />
+      )}
     </section>
+  );
+}
+
+function MobileRecipePicker({
+  currentRecipe,
+  day,
+  onCancel,
+  onConfirm,
+  onSelect,
+  selectedRecipeId
+}: {
+  currentRecipe: Recipe;
+  day: MealPlan;
+  onCancel: () => void;
+  onConfirm: () => void;
+  onSelect: (recipeId: string) => void;
+  selectedRecipeId: string;
+}) {
+  const [query, setQuery] = useState("");
+  const [tag, setTag] = useState("全部");
+  const tags = ["全部", "鸡肉", "牛肉", "鱼虾", "豆腐", "蒸笼友好", "15 分钟", "高蛋白", "低油", "素食"];
+  const filtered = recipes.filter((recipe) => {
+    const hitQuery = !query || recipe.name.includes(query) || recipe.ingredients.some((item) => item.name.includes(query));
+    const hitTag =
+      tag === "全部" ||
+      recipe.tags.includes(tag) ||
+      (tag === "鸡肉" && recipe.name.includes("鸡")) ||
+      (tag === "牛肉" && recipe.name.includes("牛")) ||
+      (tag === "鱼虾" && (recipe.name.includes("鱼") || recipe.name.includes("虾"))) ||
+      (tag === "豆腐" && recipe.name.includes("豆腐")) ||
+      (tag === "素食" && !recipe.ingredients.some((item) => ["beef", "chicken-breast", "chicken-thigh", "salmon", "shrimp", "tuna"].includes(item.ingredientId)));
+    return hitQuery && hitTag;
+  });
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-end bg-[#2f332c]/30 backdrop-blur-sm md:hidden">
+      <section className="max-h-[82vh] w-full overflow-hidden rounded-t-[30px] border border-[#ece6dc] bg-[#fffdf8] px-4 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-3 shadow-[0_-24px_70px_rgba(47,51,44,.24)]">
+        <div className="mx-auto h-1 w-12 rounded-full bg-[#d8d0c2]" />
+        <div className="mt-5 flex items-start justify-between gap-3">
+          <div>
+            <h2 className="font-serif text-2xl text-[#2f4328]">更换{day.date}菜单</h2>
+            <p className="mt-1 text-xs text-[#777568]">当前：{currentRecipe.name}</p>
+          </div>
+          <button onClick={onCancel} className="grid h-11 w-11 place-items-center rounded-full bg-[#f2eadc]" aria-label="关闭">
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        <label className="mt-4 flex min-h-11 items-center gap-2 rounded-full bg-white px-4 text-sm text-[#777568] shadow-inner">
+          <Search className="h-4 w-4" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索菜单 / 食材" className="min-w-0 flex-1 bg-transparent outline-none" />
+        </label>
+        <div className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {tags.map((item) => (
+            <button key={item} onClick={() => setTag(item)} className={`min-h-9 shrink-0 rounded-full px-4 text-xs font-semibold ${tag === item ? "bg-[#6f835e] text-white" : "bg-[#f1eadf] text-[#665f52]"}`}>
+              {item}
+            </button>
+          ))}
+        </div>
+        <div className="mt-3 max-h-[42vh] space-y-3 overflow-y-auto pr-1">
+          {filtered.map((recipe) => (
+            <button key={recipe.id} onClick={() => onSelect(recipe.id)} className="grid w-full grid-cols-[88px_1fr_28px] items-center gap-3 rounded-2xl bg-white p-2 text-left shadow-[0_8px_22px_rgba(70,63,48,.06)]">
+              <RecipeImage recipe={recipe} className="h-16 rounded-xl" />
+              <span className="min-w-0">
+                <b className="block truncate text-sm">{recipe.name}</b>
+                <span className="mt-1 flex flex-wrap gap-1">
+                  {recipe.tags.slice(0, 2).map((item) => <span key={item} className="rounded-full bg-[#eef3e7] px-2 py-0.5 text-[10px] text-[#5d7056]">{item}</span>)}
+                </span>
+                <span className="mt-1 block text-xs text-[#777568]"><Clock3 className="mr-1 inline h-3.5 w-3.5" />{recipe.prepTime + recipe.cookTime} 分钟</span>
+              </span>
+              <span className={`grid h-6 w-6 place-items-center rounded-full border ${selectedRecipeId === recipe.id ? "border-[#6f835e] bg-[#6f835e] text-white" : "border-[#d8d0c2]"}`}>
+                {selectedRecipeId === recipe.id && <Check className="h-4 w-4" />}
+              </span>
+            </button>
+          ))}
+        </div>
+        <button onClick={onConfirm} className="mt-4 min-h-12 w-full rounded-full bg-[#6f835e] text-sm font-semibold text-white">确认更换</button>
+      </section>
+    </div>
   );
 }
 
