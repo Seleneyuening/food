@@ -3,24 +3,21 @@ import { worlds } from "@/lib/content";
 
 export function FeatureCards() {
   return (
-    <section id="worlds" className="px-5 py-24">
-      <div className="mx-auto max-w-7xl">
-        <p className="text-sm uppercase tracking-[0.28em] text-[#cbb8ff]">Choose your tide</p>
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {worlds.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link href={item.href} key={item.title} className="tide-card quiet-card group min-h-80 p-8 transition duration-300">
-                <Icon className="h-9 w-9 text-[#a996ff]" />
-                <div className="mt-24">
-                  <h2 className="font-serif text-4xl">{item.title}</h2>
-                  <p className="mt-5 text-lg leading-7 text-white/78">{item.intro}</p>
-                  <p className="mt-4 leading-7 text-white/55">{item.body}</p>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+    <section id="worlds" className="px-5 pb-0 pt-4">
+      <div className="home-panel mx-auto grid max-w-7xl gap-0 p-5 md:grid-cols-4">
+        {worlds.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link href={item.href} key={item.title} className="quiet-card group flex gap-5 border-white/10 p-6 transition hover:bg-white/8 md:border-r md:last:border-r-0">
+              <Icon className="mt-1 h-8 w-8 shrink-0 text-[#a996ff]" />
+              <span>
+                <h2 className="font-serif text-2xl">{item.title}</h2>
+                <p className="mt-3 text-white/80">{item.intro}</p>
+                <p className="mt-1 text-sm text-white/58">{item.body}</p>
+              </span>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

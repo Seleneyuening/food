@@ -9,13 +9,9 @@
 }
 
 * { box-sizing: border-box; }
-html {
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  overflow-x: hidden;
   color: #f8efe7;
   background: #091123;
   font-family: var(--font-sans);
@@ -199,52 +195,6 @@ button, input, textarea { font: inherit; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 24px 90px rgba(0,0,0,.28);
   backdrop-filter: blur(20px);
   border-radius: 10px;
-}
-
-.tide-card {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,.15);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04)),
-    radial-gradient(circle at 78% 18%, rgba(240,139,105,.16), transparent 28%),
-    rgba(8, 17, 43, .68);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 24px 90px rgba(0,0,0,.24);
-  backdrop-filter: blur(20px);
-  border-radius: 12px;
-}
-
-.tide-card::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 44%;
-  background: linear-gradient(180deg, transparent, rgba(203,184,255,.12));
-  opacity: .7;
-}
-
-.tide-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-.journal-strip {
-  border-top: 1px solid rgba(255,255,255,.14);
-  border-bottom: 1px solid rgba(255,255,255,.12);
-  background: linear-gradient(90deg, rgba(8,17,43,.5), rgba(14,28,62,.62), rgba(8,17,43,.5));
-  backdrop-filter: blur(16px);
-}
-
-.project-card {
-  min-height: 300px;
-  border: 1px solid rgba(255,255,255,.13);
-  background:
-    linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.035)),
-    radial-gradient(circle at 88% 12%, rgba(157,140,255,.14), transparent 24%),
-    rgba(10, 22, 52, .76);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 28px 88px rgba(0,0,0,.24);
-  backdrop-filter: blur(18px);
-  border-radius: 12px;
 }
 
 .fade-up {
