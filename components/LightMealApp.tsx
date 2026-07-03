@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   CalendarDays,
@@ -32,7 +33,7 @@ import {
   recipes
 } from "@/lib/meal-data";
 import { ingredientImages } from "@/src/data/ingredientImages";
-import { recipeImages } from "@/src/data/recipeImages";
+import { recipeImageMap } from "@/src/data/recipeImageMap";
 
 const storeKey = "light-meal-calendar-v1";
 const tabs = ["家里库存", "食材分类", "保质期提醒", "历史记录"];
@@ -533,10 +534,19 @@ function RecipeHero({ recipe, onComplete, onUndo, canUndo }: { recipe: Recipe; o
 }
 
 function RecipeImage({ recipe, className }: { recipe: Recipe; className: string }) {
-  const image = recipeImages[recipe.id];
-  if (!image) return <ImageFallback label={recipe.name} className={className} />;
+  const image = recipeImageMap[recipe.id];
+  const [failed, setFailed] = useState(false);
+  const src = !image || failed ? "/images/placeholders/recipe-placeholder.svg" : image.src;
   return (
-    <img src={image.src} alt={image.alt} className={`${className} w-full object-cover`} loading="lazy" />
+    <Image
+      src={src}
+      alt={image?.alt ?? recipe.name}
+      width={1200}
+      height={720}
+      className={`${className} w-full object-cover`}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      onError={() => setFailed(true)}
+    />
   );
 }
 

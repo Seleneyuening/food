@@ -1,4 +1,10 @@
-import type { ImageAsset } from "./recipeImages";
+type ImageAsset = {
+  id: string;
+  src: string;
+  alt: string;
+  source?: string;
+  credit?: string;
+};
 
 const ids = [
   ["milk", "牛奶"],

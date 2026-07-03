@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-label="菜品图片待补充">
+  <rect width="1200" height="720" rx="40" fill="#fbfaf6"/>
+  <rect x="48" y="48" width="1104" height="624" rx="34" fill="#f3efe2" stroke="#dfe5d8" stroke-width="3"/>
+  <circle cx="600" cy="324" r="116" fill="#fffaf0" stroke="#8fa27c" stroke-width="10"/>
+  <path d="M492 342c58 58 158 58 216 0" fill="none" stroke="#6f835e" stroke-width="14" stroke-linecap="round"/>
+  <path d="M540 300c44-42 76-42 120 0" fill="none" stroke="#e4b35c" stroke-width="14" stroke-linecap="round"/>
+  <path d="M686 246c32-52 76-76 130-72-10 58-44 94-104 106" fill="none" stroke="#8fa27c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600" y="510" text-anchor="middle" font-family="Georgia, 'PingFang SC', serif" font-size="44" fill="#2f4328">图片待补充</text>
+  <text x="600" y="562" text-anchor="middle" font-family="'PingFang SC', Arial, sans-serif" font-size="24" fill="#777568">Fixed recipe image placeholder</text>
+</svg>

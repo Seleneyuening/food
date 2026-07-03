@@ -146,7 +146,7 @@ export const recipes: Recipe[] = defs.map(([id, name, tags, steamerFriendly, ing
   name,
   category: "午餐",
   tags,
-  image: `/images/recipes/${id}.svg`,
+  image: "",
   prepTime: 8 + (index % 4) * 2,
   cookTime: steamerFriendly ? 18 : 12 + (index % 3) * 3,
   servings: 1,
