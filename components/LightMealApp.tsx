@@ -138,13 +138,10 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
   }, [ready, store]);
 
   const today = store.mealPlan[0] ?? defaultMealPlan[0];
-  const tomorrow = store.mealPlan[1] ?? defaultMealPlan[1];
   const todayRecipe = recipes.find((recipe) => recipe.id === today.lunchRecipeId) ?? recipes[0];
-  const tomorrowRecipe = recipes.find((recipe) => recipe.id === tomorrow.lunchRecipeId) ?? recipes[1];
   const activeRecipe = recipes.find((recipe) => recipe.id === activeRecipeId) ?? todayRecipe;
   const activeDayIndex = Math.max(0, store.mealPlan.findIndex((day) => day.lunchRecipeId === activeRecipe.id));
   const activeDay = store.mealPlan[activeDayIndex] ?? today;
-  const tomorrowMissing = missingForRecipe(tomorrowRecipe, store.ingredients);
   const recommendations = useMemo(
     () => recipes.map((recipe) => ({ recipe, meta: recipeScore(recipe, store.ingredients) })).sort((a, b) => b.meta.score - a.meta.score).slice(0, 3),
     [store.ingredients]
@@ -296,9 +293,6 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
           store={store}
           today={today}
           todayRecipe={todayRecipe}
-          tomorrow={tomorrow}
-          tomorrowMissing={tomorrowMissing}
-          tomorrowRecipe={tomorrowRecipe}
         />
       )}
       {view === "inventory" && (
@@ -342,7 +336,7 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
 
         {view === "home" ? (
           <>
-            <section className="mt-6 grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
+            <section className="mt-6">
               <PlanCard
                 title="今天计划"
                 day="今天 · 星期三"
@@ -351,14 +345,6 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
                 completion={completion * 25}
                 deducted={today.completedStatus.lunch}
                 featured
-              />
-              <PlanCard
-                title="明天计划"
-                day="明天 · 星期四"
-                plan={tomorrow}
-                recipe={tomorrowRecipe}
-                missing={tomorrowMissing}
-                available={availablePercent(tomorrowRecipe, store.ingredients)}
               />
             </section>
 
@@ -495,10 +481,7 @@ function MobileHome({
   onUndo,
   store,
   today,
-  todayRecipe,
-  tomorrow,
-  tomorrowMissing,
-  tomorrowRecipe
+  todayRecipe
 }: {
   activeDay: MealPlan;
   activeDayIndex: number;
@@ -513,9 +496,6 @@ function MobileHome({
   store: Store;
   today: MealPlan;
   todayRecipe: Recipe;
-  tomorrow: MealPlan;
-  tomorrowMissing: Array<{ name: string; missing: number; unit: string }>;
-  tomorrowRecipe: Recipe;
 }) {
   const keyItems = ["milk", "egg", "spinach", "blueberry", "yogurt", "banana"]
     .map((key) => ingredients.find((item) => item.id === key))
@@ -539,17 +519,8 @@ function MobileHome({
 
   return (
     <section className="mx-auto max-w-md px-4 pb-28 pt-4 lg:hidden">
-      <div className="grid grid-cols-2 gap-3">
+      <div>
         <MobilePlanSummary title="今天计划" badge="今天" plan={today} recipe={todayRecipe} tone="green" />
-        <MobilePlanSummary
-          title="明天计划"
-          badge="明天"
-          ingredients={ingredients}
-          missing={tomorrowMissing}
-          plan={tomorrow}
-          recipe={tomorrowRecipe}
-          tone="amber"
-        />
       </div>
 
       <MobileRecipeHero
