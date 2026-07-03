@@ -119,25 +119,47 @@ function prepTips(recipe: Recipe) {
   });
 }
 
+function getCurrentWeekIndex(date = new Date()) {
+  const day = date.getDay();
+  return day === 0 ? 6 : day - 1;
+}
+
+function weekDateLabel(index: number, base = new Date()) {
+  const date = new Date(base);
+  date.setDate(base.getDate() + index - getCurrentWeekIndex(base));
+  return `${date.getMonth() + 1}/${date.getDate()}`;
+}
+
 export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | "recipes" | "shopping" | "history" }) {
   const [store, setStore] = useState<Store>({ ingredients: defaultIngredients, logs: defaultLogs, mealPlan: defaultMealPlan });
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState("家里库存");
   const [activeRecipeId, setActiveRecipeId] = useState(store.mealPlan[0].lunchRecipeId);
   const [pendingRecipe, setPendingRecipe] = useState<Recipe | null>(null);
+  const [todayIndex, setTodayIndex] = useState(0);
 
   useEffect(() => {
     const loaded = loadStore();
+    const currentIndex = getCurrentWeekIndex();
+    setTodayIndex(currentIndex);
     setStore(loaded);
-    setActiveRecipeId(loaded.mealPlan[0]?.lunchRecipeId ?? recipes[0].id);
+    setActiveRecipeId(loaded.mealPlan[currentIndex]?.lunchRecipeId ?? recipes[0].id);
     setReady(true);
+    const timer = window.setInterval(() => {
+      setTodayIndex(getCurrentWeekIndex());
+    }, 60000);
+    return () => window.clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (ready) setActiveRecipeId((store.mealPlan[todayIndex] ?? defaultMealPlan[todayIndex])?.lunchRecipeId ?? recipes[0].id);
+  }, [ready, store.mealPlan, todayIndex]);
 
   useEffect(() => {
     if (ready) window.localStorage.setItem(storeKey, JSON.stringify(store));
   }, [ready, store]);
 
-  const today = store.mealPlan[0] ?? defaultMealPlan[0];
+  const today = store.mealPlan[todayIndex] ?? defaultMealPlan[todayIndex];
   const todayRecipe = recipes.find((recipe) => recipe.id === today.lunchRecipeId) ?? recipes[0];
   const activeRecipe = recipes.find((recipe) => recipe.id === activeRecipeId) ?? todayRecipe;
   const activeDayIndex = Math.max(0, store.mealPlan.findIndex((day) => day.lunchRecipeId === activeRecipe.id));
@@ -237,7 +259,7 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
       logs: [...logs, ...current.logs],
       lastDeduct: logs,
       mealPlan: current.mealPlan.map((day, index) =>
-        index === 0 ? { ...day, completedStatus: { ...day.completedStatus, lunch: true } } : day
+        index === todayIndex ? { ...day, completedStatus: { ...day.completedStatus, lunch: true } } : day
       )
     }));
   }
@@ -254,7 +276,7 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
       logs: [...undoLogs, ...current.logs],
       lastDeduct: undefined,
       mealPlan: current.mealPlan.map((day, index) =>
-        index === 0 ? { ...day, completedStatus: { ...day.completedStatus, lunch: false } } : day
+        index === todayIndex ? { ...day, completedStatus: { ...day.completedStatus, lunch: false } } : day
       )
     }));
   }
@@ -292,6 +314,7 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
           onUndo={undoLastDeduct}
           store={store}
           today={today}
+          todayIndex={todayIndex}
           todayRecipe={todayRecipe}
         />
       )}
@@ -319,7 +342,7 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
         <div className="grid gap-5 lg:grid-cols-[.72fr_1.28fr]">
           <div className="rounded-[14px] border border-[#ece6dc] bg-white p-8 shadow-[0_16px_42px_rgba(70,63,48,.08)]">
             <h1 className="font-serif text-[27px] leading-tight text-[#2f4328]">Good morning, Selene <span className="text-[#7f966b]">枝</span></h1>
-            <p className="mt-2 text-[15px] text-[#33382f]">今天是星期三</p>
+            <p className="mt-2 text-[15px] text-[#33382f]">今天是{today.date}</p>
             <div className="mt-5 divide-y divide-[#ece6dc]">
               <MealPill icon="sun" label="早餐" value={today.breakfast} done={today.completedStatus.breakfast} />
               <MealPill icon="sun-hot" label="午餐" value={todayRecipe.name} done={today.completedStatus.lunch} active />
@@ -339,7 +362,7 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
             <section className="mt-6">
               <PlanCard
                 title="今天计划"
-                day="今天 · 星期三"
+                day={`今天 · ${today.date} · ${weekDateLabel(todayIndex)}`}
                 plan={today}
                 recipe={todayRecipe}
                 completion={completion * 25}
@@ -354,7 +377,7 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
                   {store.mealPlan.map((day, index) => {
                     const recipe = recipes.find((item) => item.id === day.lunchRecipeId) ?? recipes[0];
                     return (
-                      <button key={day.date} onClick={() => setActiveRecipeId(recipe.id)} className={`rounded-[12px] border bg-white p-3 text-center shadow-[0_10px_28px_rgba(70,63,48,.06)] transition hover:-translate-y-0.5 ${index === 2 ? "border-[#8fa27c] bg-[#f3f5e9]" : "border-[#ece6dc]"}`}>
+                      <button key={day.date} onClick={() => setActiveRecipeId(recipe.id)} className={`rounded-[12px] border bg-white p-3 text-center shadow-[0_10px_28px_rgba(70,63,48,.06)] transition hover:-translate-y-0.5 ${index === todayIndex ? "border-[#8fa27c] bg-[#f3f5e9]" : "border-[#ece6dc]"}`}>
                         <span className="block font-semibold">{day.date}</span>
                         <RecipeImage recipe={recipe} className="mx-auto mt-3 h-[70px] w-[120px] rounded-xl" />
                         <b className="mt-3 block text-sm">{recipe.name}</b>
@@ -481,6 +504,7 @@ function MobileHome({
   onUndo,
   store,
   today,
+  todayIndex,
   todayRecipe
 }: {
   activeDay: MealPlan;
@@ -495,6 +519,7 @@ function MobileHome({
   onUndo: () => void;
   store: Store;
   today: MealPlan;
+  todayIndex: number;
   todayRecipe: Recipe;
 }) {
   const keyItems = ["milk", "egg", "spinach", "blueberry", "yogurt", "banana"]
@@ -520,7 +545,7 @@ function MobileHome({
   return (
     <section className="mx-auto max-w-md px-4 pb-28 pt-4 lg:hidden">
       <div>
-        <MobilePlanSummary title="今天计划" badge="今天" plan={today} recipe={todayRecipe} tone="green" />
+        <MobilePlanSummary title="今天计划" badge="今天" dateLabel={weekDateLabel(todayIndex)} plan={today} recipe={todayRecipe} tone="green" />
       </div>
 
       <MobileRecipeHero
@@ -540,6 +565,7 @@ function MobileHome({
           {mealPlan.map((day, index) => {
             const recipe = recipes.find((item) => item.id === day.lunchRecipeId) ?? recipes[0];
             const active = recipe.id === activeRecipe.id;
+            const isToday = index === todayIndex;
             return (
               <button
                 key={day.date}
@@ -547,10 +573,10 @@ function MobileHome({
                 className={`min-h-36 w-[86px] shrink-0 snap-center rounded-[22px] border p-2 text-center transition ${active ? "scale-105 border-[#6f835e] bg-[#f3f7ed] shadow-[0_12px_30px_rgba(95,122,79,.16)]" : "border-[#ece6dc] bg-white/80 opacity-80"}`}
               >
                 <span className="block text-xs font-semibold text-[#5d6558]">{day.date}</span>
-                <span className="mt-1 block text-[10px] text-[#9a9488]">6/{9 + index}</span>
+                <span className="mt-1 block text-[10px] text-[#9a9488]">{weekDateLabel(index)}</span>
                 <RecipeImage recipe={recipe} className="mx-auto mt-2 h-14 w-14 rounded-full" />
                 <b className="mt-2 line-clamp-2 block text-[11px] leading-tight">{shortName(recipe.name)}</b>
-                {active && <span className="mt-1 inline-block rounded-full bg-[#6f835e] px-2 py-0.5 text-[10px] text-white">今天</span>}
+                {isToday && <span className="mt-1 inline-block rounded-full bg-[#6f835e] px-2 py-0.5 text-[10px] text-white">今天</span>}
                 <span
                   onClick={(event) => {
                     event.stopPropagation();
@@ -702,9 +728,10 @@ function MobileRecipesPage({
 }) {
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState("全部");
-  const [dayIndex, setDayIndex] = useState(2);
+  const currentIndex = getCurrentWeekIndex();
+  const [dayIndex, setDayIndex] = useState(currentIndex);
   const [pickerOpen, setPickerOpen] = useState(false);
-  const [pickerRecipeId, setPickerRecipeId] = useState(mealPlan[2]?.lunchRecipeId ?? recipes[0].id);
+  const [pickerRecipeId, setPickerRecipeId] = useState(mealPlan[currentIndex]?.lunchRecipeId ?? recipes[0].id);
   const tags = ["全部", "鸡肉", "牛肉", "鱼虾", "豆腐", "蒸笼友好", "15 分钟", "高蛋白", "低油", "素食"];
   const activeDay = mealPlan[dayIndex] ?? mealPlan[0] ?? defaultMealPlan[0];
   const currentRecipe = recipes.find((recipe) => recipe.id === activeDay.lunchRecipeId) ?? recipes[0];
@@ -810,14 +837,14 @@ function MobileRecipesPage({
   );
 }
 
-function MobilePlanSummary({ title, badge, ingredients = defaultIngredients, plan, recipe, tone, missing = [] }: { title: string; badge: string; ingredients?: Ingredient[]; plan: MealPlan; recipe: Recipe; tone: "green" | "amber"; missing?: Array<{ name: string; missing: number; unit: string }> }) {
+function MobilePlanSummary({ title, badge, dateLabel, ingredients = defaultIngredients, plan, recipe, tone, missing = [] }: { title: string; badge: string; dateLabel?: string; ingredients?: Ingredient[]; plan: MealPlan; recipe: Recipe; tone: "green" | "amber"; missing?: Array<{ name: string; missing: number; unit: string }> }) {
   const green = tone === "green";
   return (
     <section className={`min-h-[214px] rounded-[20px] border p-3 shadow-[0_12px_30px_rgba(70,63,48,.06)] ${green ? "border-[#dce5d6] bg-white" : "border-[#efe1c7] bg-[#fff9ea]"}`}>
       <div className="flex items-start justify-between gap-2">
         <div>
           <h2 className="font-serif text-lg text-[#2f4328]">{title}</h2>
-          <p className="mt-0.5 text-[11px] text-[#8c887a]">{plan.date} · 6月</p>
+          <p className="mt-0.5 text-[11px] text-[#8c887a]">{plan.date}{dateLabel ? ` · ${dateLabel}` : ""}</p>
         </div>
         <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold text-white ${green ? "bg-[#6f835e]" : "bg-[#e2a822]"}`}>{badge}</span>
       </div>
