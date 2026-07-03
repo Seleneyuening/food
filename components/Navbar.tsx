@@ -12,8 +12,8 @@ export function Navbar() {
     { href: "/", label: "首页", icon: Home, active: pathname === "/" },
     { href: "/week-plan", label: "一周菜单", icon: BookOpen, active: pathname === "/week-plan" },
     { href: "/ingredients", label: "食材库", icon: Warehouse, active: pathname === "/ingredients" },
-    { href: "/#shopping", label: "购物清单", icon: ShoppingBasket, active: false },
-    { href: "/#history", label: "我的记录", icon: ClipboardList, active: false }
+    { href: "/shopping", label: "购物清单", icon: ShoppingBasket, active: pathname === "/shopping" },
+    { href: "/history", label: "我的记录", icon: ClipboardList, active: pathname === "/history" }
   ];
 
   return (
@@ -49,7 +49,7 @@ export function Navbar() {
           <button className="grid h-11 w-11 place-items-center rounded-full text-[#2f332c]" aria-label="通知">
             <Bell className="h-5 w-5" />
           </button>
-          <Link href="#history" className="grid h-11 w-11 place-items-center rounded-full bg-[#e7e5d6] text-[#6f835e]" aria-label="我的">
+          <Link href="/history" className="grid h-11 w-11 place-items-center rounded-full bg-[#e7e5d6] text-[#6f835e]" aria-label="我的">
             <User className="h-5 w-5" />
           </Link>
         </div>

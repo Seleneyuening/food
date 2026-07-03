@@ -45,7 +45,11 @@ function withDefaults(store: Store): Store {
   const saved = new Map(store.ingredients.map((item) => [item.id, item]));
   return {
     ...store,
-    ingredients: defaultIngredients.map((item) => ({ ...item, ...saved.get(item.id) })),
+    ingredients: defaultIngredients.map((item) => {
+      const savedItem = saved.get(item.id);
+      if (!savedItem || typeof savedItem.unit !== "string" || !Number.isFinite(savedItem.currentQuantity) || !Number.isFinite(savedItem.initialQuantity)) return item;
+      return { ...item, ...savedItem };
+    }),
     mealPlan: store.mealPlan?.length ? store.mealPlan : defaultMealPlan,
     logs: store.logs ?? []
   };
@@ -115,7 +119,7 @@ function prepTips(recipe: Recipe) {
   });
 }
 
-export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | "recipes" }) {
+export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | "recipes" | "shopping" | "history" }) {
   const [store, setStore] = useState<Store>({ ingredients: defaultIngredients, logs: defaultLogs, mealPlan: defaultMealPlan });
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState("家里库存");
@@ -315,7 +319,9 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
           onSetLunch={setLunch}
         />
       )}
-      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view === "home" || view === "inventory" || view === "recipes" ? "hidden lg:block" : "pb-28 md:pb-14"}`}>
+      {view === "shopping" && <MobileShoppingPage ingredients={store.ingredients} onRestock={restock} />}
+      {view === "history" && <MobileHistoryPage ingredients={store.ingredients} logs={store.logs} />}
+      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view !== "home" ? "hidden lg:block" : "hidden lg:block"}`}>
         <div className="grid gap-5 lg:grid-cols-[.72fr_1.28fr]">
           <div className="rounded-[14px] border border-[#ece6dc] bg-white p-8 shadow-[0_16px_42px_rgba(70,63,48,.08)]">
             <h1 className="font-serif text-[27px] leading-tight text-[#2f4328]">Good morning, Selene <span className="text-[#7f966b]">枝</span></h1>
@@ -987,6 +993,86 @@ function MobileInventoryPage({
           {shown.map((item) => <MobileInventoryRow key={item.id} item={item} onCustom={onCustom} onRestock={onRestock} onUse={onUse} />)}
         </div>
       )}
+    </section>
+  );
+}
+
+function MobileShoppingPage({ ingredients, onRestock }: { ingredients: Ingredient[]; onRestock: (item: Ingredient) => void }) {
+  const list = ingredients
+    .filter((item) => item.currentQuantity <= item.minQuantity || daysLeft(item.expiryDate) <= 2)
+    .sort((a, b) => daysLeft(a.expiryDate) - daysLeft(b.expiryDate));
+
+  return (
+    <section className="mx-auto max-w-md px-4 pb-28 pt-4 lg:hidden">
+      <div className="rounded-[26px] border border-[#ece6dc] bg-white p-5 shadow-[0_16px_36px_rgba(70,63,48,.08)]">
+        <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#7f966b]">MARKET LIST</p>
+        <h1 className="mt-2 font-serif text-3xl text-[#2f4328]">购物清单</h1>
+        <p className="mt-1 text-sm text-[#777568]">优先补即将过期或偏少的食材。</p>
+        <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+          <MobileStat label="待购买" value={list.length} />
+          <MobileStat label="偏少" value={list.filter((item) => status(item)[0] === "偏少").length} />
+          <MobileStat label="即期" value={list.filter((item) => status(item)[0] === "即将过期").length} />
+        </div>
+      </div>
+
+      <div className="mt-4 space-y-3">
+        {list.length ? list.map((item) => {
+          const [label, color] = status(item);
+          return (
+            <article key={item.id} className="rounded-[22px] border border-[#ece6dc] bg-white p-4 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
+              <div className="grid grid-cols-[64px_1fr_auto] items-center gap-3">
+                <IngredientImage ingredient={item} className="h-14 w-14 rounded-2xl bg-[#fbfaf6]" />
+                <div className="min-w-0">
+                  <h2 className="truncate font-serif text-xl text-[#2f4328]">{item.name}</h2>
+                  <p className="mt-1 text-sm text-[#777568]">剩余 {item.currentQuantity}{item.unit} / {item.initialQuantity}{item.unit}</p>
+                  <p className="mt-1 text-xs text-[#999286]">保质期 {item.expiryDate}</p>
+                </div>
+                <span className={`rounded-full px-2 py-1 text-[10px] ${color}`}>{label}</span>
+              </div>
+              <button onClick={() => onRestock(item)} className="mt-4 min-h-11 w-full rounded-full bg-[#6f835e] text-sm font-semibold text-white">已购买，补货</button>
+            </article>
+          );
+        }) : (
+          <div className="rounded-[22px] border border-[#ece6dc] bg-white p-8 text-center text-sm text-[#777568]">
+            今天没有必须补货的食材。
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function MobileHistoryPage({ ingredients, logs }: { ingredients: Ingredient[]; logs: InventoryLog[] }) {
+  return (
+    <section className="mx-auto max-w-md px-4 pb-28 pt-4 lg:hidden">
+      <div className="rounded-[26px] border border-[#ece6dc] bg-white p-5 shadow-[0_16px_36px_rgba(70,63,48,.08)]">
+        <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#7f966b]">JOURNAL</p>
+        <h1 className="mt-2 font-serif text-3xl text-[#2f4328]">我的记录</h1>
+        <p className="mt-1 text-sm text-[#777568]">扣库存、补货和调整都会留在这里。</p>
+      </div>
+      <div className="mt-4 space-y-3">
+        {logs.length ? logs.slice(0, 40).map((log) => {
+          const item = ingredients.find((ingredient) => ingredient.id === log.ingredientId);
+          const plus = log.quantityChange > 0;
+          return (
+            <article key={log.id} className="rounded-[20px] border border-[#ece6dc] bg-white p-4 shadow-[0_10px_24px_rgba(70,63,48,.05)]">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-semibold text-[#2f332c]">{log.note}</p>
+                  <p className="mt-1 text-xs text-[#999286]">{new Date(log.createdAt).toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })}</p>
+                </div>
+                <span className={`shrink-0 rounded-full px-3 py-1 text-sm font-semibold ${plus ? "bg-[#dfe9dc] text-[#536f56]" : "bg-[#f8ded9] text-[#9b4d45]"}`}>
+                  {plus ? "+" : ""}{log.quantityChange}{item?.unit ?? log.unit}
+                </span>
+              </div>
+            </article>
+          );
+        }) : (
+          <div className="rounded-[22px] border border-[#ece6dc] bg-white p-8 text-center text-sm text-[#777568]">
+            还没有记录。
+          </div>
+        )}
+      </div>
     </section>
   );
 }
