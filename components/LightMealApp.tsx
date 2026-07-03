@@ -297,7 +297,18 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" })
           tomorrowRecipe={tomorrowRecipe}
         />
       )}
-      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view === "home" ? "hidden lg:block" : "pb-28 md:pb-14"}`}>
+      {view === "inventory" && (
+        <MobileInventoryPage
+          ingredients={store.ingredients}
+          logs={store.logs}
+          onCustom={customUse}
+          onRestock={restock}
+          onUse={changeInventory}
+          tab={tab}
+          setTab={setTab}
+        />
+      )}
+      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view === "home" || view === "inventory" ? "hidden lg:block" : "pb-28 md:pb-14"}`}>
         <div className="grid gap-5 lg:grid-cols-[.72fr_1.28fr]">
           <div className="rounded-[14px] border border-[#ece6dc] bg-white p-8 shadow-[0_16px_42px_rgba(70,63,48,.08)]">
             <h1 className="font-serif text-[27px] leading-tight text-[#2f4328]">Good morning, Selene <span className="text-[#7f966b]">枝</span></h1>
@@ -775,6 +786,140 @@ function MobileInventoryCard({ item }: { item: Ingredient }) {
       <span className={`mt-2 inline-block rounded-full px-2 py-1 text-[10px] ${color}`}>{label}</span>
     </Link>
   );
+}
+
+function MobileInventoryPage({
+  ingredients,
+  logs,
+  onCustom,
+  onRestock,
+  onUse,
+  tab,
+  setTab
+}: {
+  ingredients: Ingredient[];
+  logs: InventoryLog[];
+  onCustom: (item: Ingredient) => void;
+  onRestock: (item: Ingredient) => void;
+  onUse: (id: string, qty: number, type: InventoryLog["type"], note: string) => void;
+  tab: string;
+  setTab: (tab: string) => void;
+}) {
+  const urgent = ingredients.filter((item) => item.currentQuantity <= item.minQuantity || daysLeft(item.expiryDate) <= 2);
+  const shown = tab === "家里库存" ? ingredients : tab === "保质期提醒" ? [...ingredients].sort((a, b) => daysLeft(a.expiryDate) - daysLeft(b.expiryDate)) : ingredients;
+  const fullness = Math.round(ingredients.reduce((sum, item) => sum + pct(item), 0) / ingredients.length);
+
+  return (
+    <section className="mx-auto max-w-md px-4 pb-28 pt-4 lg:hidden">
+      <div className="rounded-[26px] border border-[#dfe5d8] bg-[#f7f9f0] p-5 shadow-[0_16px_36px_rgba(70,63,48,.08)]">
+        <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#7f966b]">PANTRY</p>
+        <div className="mt-2 flex items-end justify-between gap-4">
+          <div>
+            <h1 className="font-serif text-3xl text-[#2f4328]">食材库</h1>
+            <p className="mt-1 text-sm text-[#777568]">家里还剩什么，一眼看清。</p>
+          </div>
+          <MobileProgress value={fullness} />
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+          <MobileStat label="偏少" value={ingredients.filter((item) => status(item)[0] === "偏少").length} />
+          <MobileStat label="即将过期" value={ingredients.filter((item) => status(item)[0] === "即将过期").length} />
+          <MobileStat label="提醒" value={urgent.length} />
+        </div>
+      </div>
+
+      <div className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {tabs.map((item) => (
+          <button key={item} onClick={() => setTab(item)} className={`min-h-10 shrink-0 rounded-full px-4 text-sm font-semibold ${tab === item ? "bg-[#6f835e] text-white" : "bg-[#f1eadf] text-[#665f52]"}`}>
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {tab === "历史记录" ? (
+        <div className="mt-3 space-y-3">
+          {logs.slice(0, 20).map((log) => {
+            const item = ingredients.find((ingredient) => ingredient.id === log.ingredientId);
+            return (
+              <div key={log.id} className="rounded-[18px] border border-[#ece6dc] bg-white p-4 text-sm shadow-[0_10px_24px_rgba(70,63,48,.05)]">
+                <p className="font-semibold">{log.note}</p>
+                <p className={`mt-1 ${log.quantityChange < 0 ? "text-[#a05a50]" : "text-[#667a5f]"}`}>{log.quantityChange > 0 ? "+" : ""}{log.quantityChange}{item?.unit ?? log.unit}</p>
+              </div>
+            );
+          })}
+        </div>
+      ) : tab === "食材分类" ? (
+        <div className="mt-3 space-y-3">
+          {[...new Set(ingredients.map((item) => item.category))].map((group) => (
+            <section key={group} className="rounded-[20px] border border-[#ece6dc] bg-white p-4 shadow-[0_10px_24px_rgba(70,63,48,.05)]">
+              <h2 className="font-serif text-lg text-[#2f4328]">{group}</h2>
+              <p className="mt-2 text-sm leading-7 text-[#777568]">{ingredients.filter((item) => item.category === group).map((item) => item.name).join("、")}</p>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-3 space-y-3">
+          {shown.map((item) => <MobileInventoryRow key={item.id} item={item} onCustom={onCustom} onRestock={onRestock} onUse={onUse} />)}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function MobileStat({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-2xl bg-white/70 px-2 py-3">
+      <p className="font-serif text-xl text-[#2f4328]">{value}</p>
+      <p className="mt-1 text-[#777568]">{label}</p>
+    </div>
+  );
+}
+
+function MobileInventoryRow({ item, onCustom, onRestock, onUse }: { item: Ingredient; onCustom: (item: Ingredient) => void; onRestock: (item: Ingredient) => void; onUse: (id: string, qty: number, type: InventoryLog["type"], note: string) => void }) {
+  const [label, color] = status(item);
+  const step = item.visualType === "liquid" ? 250 : item.visualType === "count" ? 1 : 100;
+  return (
+    <article className="rounded-[22px] border border-[#ece6dc] bg-white p-4 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
+      <div className="grid grid-cols-[74px_1fr_auto] gap-3">
+        <IngredientImage ingredient={item} className="h-16 w-16 rounded-2xl bg-[#fbfaf6]" />
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <h2 className="truncate font-serif text-xl text-[#2f4328]">{item.name}</h2>
+            <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] ${color}`}>{label}</span>
+          </div>
+          <p className="mt-1 text-sm text-[#666b60]">{item.currentQuantity}{item.unit} / {item.initialQuantity}{item.unit}</p>
+          <p className="mt-1 text-xs text-[#999286]">保质期 {item.expiryDate} · {Math.max(0, daysLeft(item.expiryDate))} 天</p>
+        </div>
+        <div className="w-12">
+          {item.visualType === "liquid" ? <LiquidMini item={item} /> : item.visualType === "count" ? <CountMini item={item} /> : <WeightMini item={item} />}
+        </div>
+      </div>
+      <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#efe8dc]">
+        <span className="block h-full rounded-full bg-[#6f835e]" style={{ width: `${pct(item)}%` }} />
+      </div>
+      <div className="mt-4 grid grid-cols-4 gap-2">
+        <button onClick={() => onUse(item.id, -step, "use", `快速记录：${item.name} -${step}${item.unit}`)} className="min-h-11 rounded-full bg-[#f4ecdf] text-xs font-semibold text-[#665f52]">-{step}{item.unit}</button>
+        <button onClick={() => onUse(item.id, -step * 2, "use", `快速记录：${item.name} -${step * 2}${item.unit}`)} className="min-h-11 rounded-full bg-[#f4ecdf] text-xs font-semibold text-[#665f52]">-{step * 2}{item.unit}</button>
+        <button onClick={() => onCustom(item)} className="min-h-11 rounded-full bg-[#eef3e7] text-xs font-semibold text-[#596b52]">自定义</button>
+        <button onClick={() => onRestock(item)} className="min-h-11 rounded-full bg-[#6f835e] text-xs font-semibold text-white">补货</button>
+      </div>
+    </article>
+  );
+}
+
+function CountMini({ item }: { item: Ingredient }) {
+  return <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#fff3d4] font-serif text-sm text-[#8a6b27]">{item.currentQuantity}/{item.initialQuantity}</div>;
+}
+
+function LiquidMini({ item }: { item: Ingredient }) {
+  return (
+    <div className="mx-auto h-14 w-7 overflow-hidden rounded-b-2xl rounded-t-lg border border-[#cfd5c7] bg-white">
+      <div className="h-full bg-[#f7f1df]" style={{ transform: `translateY(${100 - pct(item)}%)` }} />
+    </div>
+  );
+}
+
+function WeightMini({ item }: { item: Ingredient }) {
+  return <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#eef3e7] font-serif text-sm text-[#6f835e]">{pct(item)}%</div>;
 }
 
 function MobileProgress({ value }: { value: number }) {
