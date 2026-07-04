@@ -8,6 +8,8 @@ import { navLinks } from "@/lib/content";
 
 export function Navbar() {
   const pathname = usePathname();
+  if (pathname.startsWith("/recipes/")) return null;
+
   const bottomLinks = [
     { href: "/", label: "首页", icon: Home, active: pathname === "/" },
     { href: "/week-plan", label: "一周菜单", icon: BookOpen, active: pathname === "/week-plan" },

@@ -1,0 +1,3506 @@
+[
+  {
+    "id": "beef-pepper-rice-bowl",
+    "name": "牛肉彩椒饭",
+    "englishName": "Beef & Bell Pepper Rice Bowl",
+    "summary": "牛肉和彩椒快速炒香，配米饭，适合工作日午餐。",
+    "tags": [
+      "高蛋白",
+      "补铁",
+      "15分钟",
+      "快手菜"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "beef",
+        "name": "牛肉片",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "逆纹切薄片"
+      },
+      {
+        "ingredientId": "bell-pepper",
+        "name": "彩椒",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "红黄彩椒均可"
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "onion",
+        "name": "洋葱",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 10,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "牛肉用生抽和黑胡椒抓匀；彩椒、洋葱切条。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 2,
+        "title": "炒牛肉",
+        "instruction": "锅热后下油，牛肉大火快速翻炒至刚变色，先盛出。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 3,
+        "title": "炒蔬菜",
+        "instruction": "原锅放洋葱和彩椒，炒至断生、仍有脆感。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 4,
+        "title": "合炒装碗",
+        "instruction": "牛肉回锅翻匀，配热米饭装碗即可。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "牛肉可换鸡腿肉或豆腐。",
+      "米饭可换糙米饭或藜麦饭。"
+    ],
+    "tips": [
+      "牛肉不要久炒，刚熟更嫩。"
+    ],
+    "image": {
+      "src": "/images/recipes/beef-pepper-rice-bowl.jpg",
+      "alt": "牛肉彩椒饭"
+    },
+    "totalTimeMinutes": 20
+  },
+  {
+    "id": "chicken-quinoa-salad",
+    "name": "鸡胸肉藜麦沙拉",
+    "englishName": "Chicken Quinoa Salad",
+    "summary": "鸡胸肉、藜麦和多种蔬菜组成的清爽午餐碗。",
+    "tags": [
+      "高蛋白",
+      "低油",
+      "快手菜",
+      "沙拉"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "chicken-breast",
+        "name": "鸡胸肉",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "quinoa",
+        "name": "藜麦",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "干重"
+      },
+      {
+        "ingredientId": "mixed-greens",
+        "name": "生菜混合叶",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cherry-tomato",
+        "name": "小番茄",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cucumber",
+        "name": "黄瓜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "lemon-juice",
+        "name": "柠檬汁",
+        "quantity": 10,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮藜麦",
+        "instruction": "藜麦冲洗后加约 2 倍水，小火煮至开花，沥干放凉。",
+        "durationMinutes": 15
+      },
+      {
+        "order": 2,
+        "title": "处理鸡胸",
+        "instruction": "鸡胸撒黑胡椒，可蒸熟或平底锅少油煎熟，静置后切片。",
+        "durationMinutes": 10
+      },
+      {
+        "order": 3,
+        "title": "切蔬菜",
+        "instruction": "黄瓜切片，小番茄对半切，生菜洗净沥干。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 4,
+        "title": "组合",
+        "instruction": "所有食材入碗，淋橄榄油和柠檬汁，轻拌即可。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "藜麦可换糙米饭。",
+      "鸡胸可换虾仁或金枪鱼。"
+    ],
+    "tips": [
+      "鸡胸静置 2 分钟再切，汁水不易流失。"
+    ],
+    "image": {
+      "src": "/images/recipes/chicken-quinoa-salad.jpg",
+      "alt": "鸡胸肉藜麦沙拉"
+    },
+    "totalTimeMinutes": 25
+  },
+  {
+    "id": "salmon-avocado-rice-bowl",
+    "name": "三文鱼牛油果饭",
+    "englishName": "Salmon Avocado Rice Bowl",
+    "summary": "煎三文鱼搭配牛油果、米饭和清爽蔬菜。",
+    "tags": [
+      "高蛋白",
+      "优质脂肪",
+      "快手菜",
+      "饭碗"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 10,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "salmon",
+        "name": "三文鱼",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "avocado",
+        "name": "牛油果",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "约半个"
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cucumber",
+        "name": "黄瓜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "edamame",
+        "name": "毛豆",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "lemon-juice",
+        "name": "柠檬汁",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "三文鱼擦干，牛油果切片，黄瓜切片。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 2,
+        "title": "煎三文鱼",
+        "instruction": "锅热后少油，三文鱼两面煎至表面金黄、内部熟透。",
+        "durationMinutes": 7
+      },
+      {
+        "order": 3,
+        "title": "加热配料",
+        "instruction": "米饭和毛豆加热备用。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 4,
+        "title": "装碗",
+        "instruction": "米饭打底，摆三文鱼、牛油果、黄瓜和毛豆，淋少量生抽与柠檬汁。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "三文鱼可换金枪鱼或鸡胸肉。",
+      "毛豆可换西兰花。"
+    ],
+    "tips": [
+      "牛油果最后切，能减少氧化变色。"
+    ],
+    "image": {
+      "src": "/images/recipes/salmon-avocado-rice-bowl.jpg",
+      "alt": "三文鱼牛油果饭"
+    },
+    "totalTimeMinutes": 18
+  },
+  {
+    "id": "shrimp-broccoli-fried-rice",
+    "name": "虾仁西兰花炒饭",
+    "englishName": "Shrimp Broccoli Fried Rice",
+    "summary": "虾仁、西兰花和米饭一锅完成，简单饱腹。",
+    "tags": [
+      "高蛋白",
+      "15分钟",
+      "快手菜",
+      "一锅餐"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "shrimp",
+        "name": "虾仁",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "去壳去虾线"
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "西兰花",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "隔夜饭更好炒"
+      },
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 1,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "carrot",
+        "name": "胡萝卜",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "garlic",
+        "name": "蒜",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "焯蔬菜",
+        "instruction": "西兰花切小朵，沸水焯约 1 分钟，沥干。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 2,
+        "title": "炒蛋和虾",
+        "instruction": "锅中少油，炒散鸡蛋盛出；虾仁炒至变色盛出。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "炒饭",
+        "instruction": "锅中下蒜末、胡萝卜和米饭，压散炒热。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 4,
+        "title": "合炒",
+        "instruction": "加入西兰花、鸡蛋和虾仁，淋生抽翻匀即可。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "西兰花可换芦笋或荷兰豆。",
+      "米饭可换糙米饭。"
+    ],
+    "tips": [
+      "虾仁变色卷曲即可，避免久炒变老。"
+    ],
+    "image": {
+      "src": "/images/recipes/shrimp-broccoli-fried-rice.jpg",
+      "alt": "虾仁西兰花炒饭"
+    },
+    "totalTimeMinutes": 20
+  },
+  {
+    "id": "egg-tofu-soba",
+    "name": "鸡蛋豆腐拌荞麦面",
+    "englishName": "Egg & Tofu Soba",
+    "summary": "荞麦面搭配豆腐和鸡蛋，清爽且有饱腹感。",
+    "tags": [
+      "高蛋白",
+      "低油",
+      "15分钟",
+      "荞麦面"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 7,
+    "cookTimeMinutes": 10,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "soba",
+        "name": "荞麦面",
+        "quantity": 90,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "干重"
+      },
+      {
+        "ingredientId": "tofu",
+        "name": "北豆腐",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 2,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cucumber",
+        "name": "黄瓜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "scallion",
+        "name": "葱花",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 12,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "sesame-oil",
+        "name": "香油",
+        "quantity": 4,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "sesame",
+        "name": "白芝麻",
+        "quantity": 3,
+        "unit": "g",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮面",
+        "instruction": "荞麦面按包装时间煮熟，捞出后用凉水冲洗，沥干。",
+        "durationMinutes": 6
+      },
+      {
+        "order": 2,
+        "title": "煮蛋",
+        "instruction": "鸡蛋煮熟后剥壳，对半切开。",
+        "durationMinutes": 8
+      },
+      {
+        "order": 3,
+        "title": "处理豆腐",
+        "instruction": "豆腐切块，可焯水 1 分钟去豆腥味。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 4,
+        "title": "调拌",
+        "instruction": "荞麦面、豆腐、黄瓜装碗，淋生抽和香油，摆鸡蛋，撒葱花芝麻。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "黄瓜可换菠菜或小番茄。",
+      "豆腐可换鸡丝。"
+    ],
+    "tips": [
+      "冲凉水后荞麦面更筋道、不易粘。"
+    ],
+    "image": {
+      "src": "/images/recipes/egg-tofu-soba.jpg",
+      "alt": "鸡蛋豆腐拌荞麦面"
+    },
+    "totalTimeMinutes": 17
+  },
+  {
+    "id": "tuna-vegetable-rice",
+    "name": "金枪鱼蔬菜饭",
+    "englishName": "Tuna Vegetable Rice Bowl",
+    "summary": "罐装金枪鱼搭配玉米、黄瓜和蔬菜，适合极快手午餐。",
+    "tags": [
+      "高蛋白",
+      "10分钟",
+      "快手菜",
+      "饭碗"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 3,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "canned-tuna",
+        "name": "水浸金枪鱼",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "沥干"
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "corn",
+        "name": "玉米粒",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cucumber",
+        "name": "黄瓜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "purple-cabbage",
+        "name": "紫甘蓝",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "cherry-tomato",
+        "name": "小番茄",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "yogurt",
+        "name": "无糖酸奶",
+        "quantity": 30,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可作酱汁"
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "金枪鱼沥干；黄瓜切片，小番茄对半切。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 2,
+        "title": "加热",
+        "instruction": "米饭和玉米加热至温热。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 3,
+        "title": "调酱",
+        "instruction": "无糖酸奶加黑胡椒搅匀。",
+        "durationMinutes": 1
+      },
+      {
+        "order": 4,
+        "title": "装碗",
+        "instruction": "米饭打底，铺金枪鱼和蔬菜，淋酸奶酱即可。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "金枪鱼可换鸡胸肉。",
+      "酸奶酱可换少量生抽和柠檬汁。"
+    ],
+    "tips": [
+      "选择水浸金枪鱼，整体更清爽。"
+    ],
+    "image": {
+      "src": "/images/recipes/tuna-vegetable-rice.jpg",
+      "alt": "金枪鱼蔬菜饭"
+    },
+    "totalTimeMinutes": 11
+  },
+  {
+    "id": "tomato-chicken-pasta",
+    "name": "番茄鸡肉意面",
+    "englishName": "Tomato Chicken Pasta",
+    "summary": "番茄、鸡胸和意面组成的经典快手午餐。",
+    "tags": [
+      "高蛋白",
+      "快手菜",
+      "意面",
+      "番茄风味"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "pasta",
+        "name": "意面",
+        "quantity": 90,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "干重"
+      },
+      {
+        "ingredientId": "chicken-breast",
+        "name": "鸡胸肉",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "tomato",
+        "name": "番茄",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "onion",
+        "name": "洋葱",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "garlic",
+        "name": "蒜",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "tomato-paste",
+        "name": "番茄膏",
+        "quantity": 15,
+        "unit": "g",
+        "trackInventory": false,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮意面",
+        "instruction": "意面放入沸水煮至刚熟，保留少许面汤。",
+        "durationMinutes": 10
+      },
+      {
+        "order": 2,
+        "title": "炒鸡肉",
+        "instruction": "鸡胸切小块，少油炒至表面变白，盛出。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "做番茄酱",
+        "instruction": "洋葱蒜末炒香，加入番茄和番茄膏，小火炒成酱。",
+        "durationMinutes": 6
+      },
+      {
+        "order": 4,
+        "title": "合炒",
+        "instruction": "鸡肉和意面回锅，加少许面汤，黑胡椒调味，拌匀即可。",
+        "durationMinutes": 3
+      }
+    ],
+    "substitutions": [
+      "鸡胸可换虾仁。",
+      "意面可换荞麦面。"
+    ],
+    "tips": [
+      "面汤能让酱汁更顺滑地挂在意面上。"
+    ],
+    "image": {
+      "src": "/images/recipes/tomato-chicken-pasta.jpg",
+      "alt": "番茄鸡肉意面"
+    },
+    "totalTimeMinutes": 25
+  },
+  {
+    "id": "teriyaki-chicken-thigh-rice",
+    "name": "日式照烧鸡腿饭",
+    "englishName": "Teriyaki Chicken Thigh Rice Bowl",
+    "summary": "去皮鸡腿肉配照烧汁和米饭，满足感更强。",
+    "tags": [
+      "高蛋白",
+      "日式",
+      "饭碗",
+      "快手菜"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 15,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "chicken-thigh",
+        "name": "去皮鸡腿肉",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "西兰花",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "carrot",
+        "name": "胡萝卜",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "teriyaki-sauce",
+        "name": "照烧汁",
+        "quantity": 18,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "sesame",
+        "name": "白芝麻",
+        "quantity": 3,
+        "unit": "g",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "鸡腿肉擦干，西兰花和胡萝卜切好。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 2,
+        "title": "煎鸡腿",
+        "instruction": "平底锅少油，鸡腿肉两面煎至金黄并熟透。",
+        "durationMinutes": 10
+      },
+      {
+        "order": 3,
+        "title": "收汁",
+        "instruction": "倒入照烧汁，小火翻面让酱汁裹匀。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 4,
+        "title": "装碗",
+        "instruction": "米饭打底，摆鸡腿和焯熟蔬菜，撒芝麻。",
+        "durationMinutes": 3
+      }
+    ],
+    "substitutions": [
+      "鸡腿肉可换鸡胸，但烹饪时间可略短。",
+      "西兰花可换青菜。"
+    ],
+    "tips": [
+      "照烧汁含糖，最后再加可避免焦糊。"
+    ],
+    "image": {
+      "src": "/images/recipes/teriyaki-chicken-thigh-rice.jpg",
+      "alt": "日式照烧鸡腿饭"
+    },
+    "totalTimeMinutes": 23
+  },
+  {
+    "id": "beef-onion-rice-bowl",
+    "name": "牛肉洋葱盖饭",
+    "englishName": "Beef Onion Rice Bowl",
+    "summary": "洋葱的甜味配薄牛肉片，适合快速做一碗饭。",
+    "tags": [
+      "补铁",
+      "15分钟",
+      "日式",
+      "饭碗"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 6,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "beef",
+        "name": "肥牛或牛肉片",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "onion",
+        "name": "洋葱",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 1,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 12,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "mirin",
+        "name": "味醂",
+        "quantity": 10,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": "可用少量糖代替"
+      },
+      {
+        "ingredientId": "water",
+        "name": "清水",
+        "quantity": 50,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "scallion",
+        "name": "葱花",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮洋葱",
+        "instruction": "洋葱切丝，和清水、生抽、味醂小火煮软。",
+        "durationMinutes": 6
+      },
+      {
+        "order": 2,
+        "title": "下牛肉",
+        "instruction": "加入牛肉片，轻轻拨散，煮至变色熟透。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 3,
+        "title": "煮蛋",
+        "instruction": "喜欢滑蛋可将打散鸡蛋沿锅边淋入，半凝固即可关火。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 4,
+        "title": "盖饭",
+        "instruction": "米饭装碗，铺牛肉洋葱和汤汁，撒葱花。",
+        "durationMinutes": 1
+      }
+    ],
+    "substitutions": [
+      "牛肉可换鸡肉片。",
+      "味醂没有可省略，少量糖调和。"
+    ],
+    "tips": [
+      "牛肉片薄，最后下锅才能嫩。"
+    ],
+    "image": {
+      "src": "/images/recipes/beef-onion-rice-bowl.jpg",
+      "alt": "牛肉洋葱盖饭"
+    },
+    "totalTimeMinutes": 18
+  },
+  {
+    "id": "shrimp-corn-steamed-egg",
+    "name": "虾仁玉米蒸蛋",
+    "englishName": "Shrimp Corn Steamed Egg",
+    "summary": "虾仁、玉米与嫩蒸蛋，适合蒸笼模式。",
+    "tags": [
+      "蒸笼友好",
+      "高蛋白",
+      "低油",
+      "15分钟"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 7,
+    "cookTimeMinutes": 15,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 2,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "shrimp",
+        "name": "虾仁",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "corn",
+        "name": "玉米粒",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "warm-water",
+        "name": "温水",
+        "quantity": 220,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "sesame-oil",
+        "name": "香油",
+        "quantity": 3,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "scallion",
+        "name": "葱花",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "调蛋液",
+        "instruction": "鸡蛋打散，加温水和少量盐，过筛到耐热碗。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 2,
+        "title": "加配料",
+        "instruction": "虾仁和玉米粒均匀放入蛋液。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 3,
+        "title": "蒸制",
+        "instruction": "水开后转中小火蒸约 12–15 分钟，表面凝固即可。",
+        "durationMinutes": 15
+      },
+      {
+        "order": 4,
+        "title": "调味",
+        "instruction": "出锅淋生抽和香油，撒葱花。",
+        "durationMinutes": 1
+      }
+    ],
+    "substitutions": [
+      "玉米可换西兰花碎。",
+      "虾仁可换鸡肉丁。"
+    ],
+    "tips": [
+      "蛋液和水约 1:1.5，更容易蒸得嫩。"
+    ],
+    "image": {
+      "src": "/images/recipes/shrimp-corn-steamed-egg.jpg",
+      "alt": "虾仁玉米蒸蛋"
+    },
+    "totalTimeMinutes": 22
+  },
+  {
+    "id": "chicken-pumpkin-bowl",
+    "name": "鸡胸肉南瓜碗",
+    "englishName": "Chicken Pumpkin Bowl",
+    "summary": "蒸南瓜、鸡胸肉和蔬菜组合成温暖的轻食碗。",
+    "tags": [
+      "高蛋白",
+      "蒸笼友好",
+      "低油",
+      "饱腹"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 20,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "chicken-breast",
+        "name": "鸡胸肉",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "pumpkin",
+        "name": "南瓜",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "西兰花",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "quinoa",
+        "name": "藜麦",
+        "quantity": 40,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "干重，可选"
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "lemon-juice",
+        "name": "柠檬汁",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "南瓜切块，西兰花掰小朵；鸡胸撒黑胡椒。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 2,
+        "title": "蒸南瓜和鸡胸",
+        "instruction": "南瓜和鸡胸分盘放蒸笼，蒸至鸡肉熟透、南瓜软糯。",
+        "durationMinutes": 15
+      },
+      {
+        "order": 3,
+        "title": "处理西兰花",
+        "instruction": "西兰花最后 4–5 分钟放入蒸笼，保持颜色。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 4,
+        "title": "装碗",
+        "instruction": "将食材和煮熟藜麦装碗，淋橄榄油和柠檬汁。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "藜麦可换米饭。",
+      "南瓜可换红薯。"
+    ],
+    "tips": [
+      "鸡胸厚处切开确认熟透再食用。"
+    ],
+    "image": {
+      "src": "/images/recipes/chicken-pumpkin-bowl.jpg",
+      "alt": "鸡胸肉南瓜碗"
+    },
+    "totalTimeMinutes": 28
+  },
+  {
+    "id": "tofu-mushroom-chicken-hotpot",
+    "name": "豆腐菌菇鸡肉锅",
+    "englishName": "Tofu Mushroom Chicken Hotpot",
+    "summary": "豆腐、菌菇、鸡肉和青菜的一人份暖锅。",
+    "tags": [
+      "高蛋白",
+      "一锅餐",
+      "蒸笼友好",
+      "暖胃"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "chicken-breast",
+        "name": "鸡胸肉",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "切片"
+      },
+      {
+        "ingredientId": "tofu",
+        "name": "北豆腐",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "mushroom",
+        "name": "混合菌菇",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "bok-choy",
+        "name": "青菜",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "carrot",
+        "name": "胡萝卜",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broth",
+        "name": "清汤或清水",
+        "quantity": 400,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "ginger",
+        "name": "姜片",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "豆腐切块，菌菇撕开，鸡胸切薄片。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 2,
+        "title": "煮汤底",
+        "instruction": "锅中加清汤、姜片和胡萝卜，煮开。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 3,
+        "title": "下食材",
+        "instruction": "先放菌菇和豆腐煮 4 分钟，再放鸡肉和青菜。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 4,
+        "title": "调味",
+        "instruction": "鸡肉熟透后加少量生抽调味，即可食用。",
+        "durationMinutes": 1
+      }
+    ],
+    "substitutions": [
+      "鸡胸可换虾仁或牛肉片。",
+      "青菜可换菠菜或白菜。"
+    ],
+    "tips": [
+      "鸡肉片最后放，熟透即可，口感更嫩。"
+    ],
+    "image": {
+      "src": "/images/recipes/tofu-mushroom-chicken-hotpot.jpg",
+      "alt": "豆腐菌菇鸡肉锅"
+    },
+    "totalTimeMinutes": 25
+  },
+  {
+    "id": "tomato-beef-stew-rice",
+    "name": "番茄牛腩饭",
+    "englishName": "Tomato Beef Stew Rice",
+    "summary": "番茄牛肉炖菜配米饭，适合提前做一份。",
+    "tags": [
+      "补铁",
+      "番茄风味",
+      "饱腹",
+      "一锅餐"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 35,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "beef-stew",
+        "name": "牛腩",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "切块"
+      },
+      {
+        "ingredientId": "tomato",
+        "name": "番茄",
+        "quantity": 250,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "onion",
+        "name": "洋葱",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "carrot",
+        "name": "胡萝卜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "tomato-paste",
+        "name": "番茄膏",
+        "quantity": 15,
+        "unit": "g",
+        "trackInventory": false,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "broth",
+        "name": "清水或清汤",
+        "quantity": 300,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "炒香",
+        "instruction": "锅中少油炒洋葱，再放牛腩块煎至表面变色。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 2,
+        "title": "炒番茄",
+        "instruction": "加入番茄和番茄膏，炒出汁水。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 3,
+        "title": "炖煮",
+        "instruction": "加清汤和胡萝卜，小火炖至牛肉软嫩。",
+        "durationMinutes": 25
+      },
+      {
+        "order": 4,
+        "title": "配饭",
+        "instruction": "按口味调味，浇在热米饭上即可。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "可用已炖熟牛肉缩短时间。",
+      "牛腩可换牛肉片，炖煮缩短到 8 分钟。"
+    ],
+    "tips": [
+      "本菜适合一次做两份，第二天加热更入味。"
+    ],
+    "image": {
+      "src": "/images/recipes/tomato-beef-stew-rice.jpg",
+      "alt": "番茄牛腩饭"
+    },
+    "totalTimeMinutes": 45
+  },
+  {
+    "id": "salmon-spinach-salad",
+    "name": "三文鱼菠菜沙拉",
+    "englishName": "Salmon Spinach Salad",
+    "summary": "煎三文鱼搭配菠菜、鸡蛋和清爽蔬菜。",
+    "tags": [
+      "高蛋白",
+      "优质脂肪",
+      "低油",
+      "沙拉"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 10,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "salmon",
+        "name": "三文鱼",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "菠菜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 1,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cucumber",
+        "name": "黄瓜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cherry-tomato",
+        "name": "小番茄",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "avocado",
+        "name": "牛油果",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "lemon-juice",
+        "name": "柠檬汁",
+        "quantity": 10,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "处理菠菜",
+        "instruction": "菠菜洗净，沸水快速焯 20–30 秒后沥干。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 2,
+        "title": "煎三文鱼",
+        "instruction": "三文鱼少油煎熟，稍放凉后切块。",
+        "durationMinutes": 7
+      },
+      {
+        "order": 3,
+        "title": "准备配料",
+        "instruction": "煮熟鸡蛋切开，黄瓜和番茄切好。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 4,
+        "title": "拌沙拉",
+        "instruction": "菠菜打底，摆食材，淋橄榄油和柠檬汁。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "菠菜可换生菜。",
+      "三文鱼可换鸡胸。"
+    ],
+    "tips": [
+      "菠菜焯水后挤去多余水分，沙拉更清爽。"
+    ],
+    "image": {
+      "src": "/images/recipes/salmon-spinach-salad.jpg",
+      "alt": "三文鱼菠菜沙拉"
+    },
+    "totalTimeMinutes": 18
+  },
+  {
+    "id": "egg-avocado-wholewheat-toast",
+    "name": "鸡蛋牛油果全麦吐司",
+    "englishName": "Egg Avocado Wholewheat Toast",
+    "summary": "牛油果、鸡蛋和全麦吐司，适合作为早餐或轻午餐。",
+    "tags": [
+      "10分钟",
+      "优质脂肪",
+      "早餐",
+      "快手菜"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 8,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "wholewheat-bread",
+        "name": "全麦吐司",
+        "quantity": 2,
+        "unit": "slice",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "avocado",
+        "name": "牛油果",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "约半个"
+      },
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 1,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cherry-tomato",
+        "name": "小番茄",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "lemon-juice",
+        "name": "柠檬汁",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 3,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": "煎蛋用"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "烤吐司",
+        "instruction": "吐司烤至表面微脆。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 2,
+        "title": "压牛油果",
+        "instruction": "牛油果压成粗泥，拌入柠檬汁和黑胡椒。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 3,
+        "title": "煎蛋",
+        "instruction": "平底锅少油煎鸡蛋至喜欢的熟度。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 4,
+        "title": "组合",
+        "instruction": "吐司抹牛油果泥，放鸡蛋和小番茄即可。",
+        "durationMinutes": 1
+      }
+    ],
+    "substitutions": [
+      "鸡蛋可换水浸金枪鱼。",
+      "吐司可换全麦贝果。"
+    ],
+    "tips": [
+      "牛油果成熟度以轻按略软为宜。"
+    ],
+    "image": {
+      "src": "/images/recipes/egg-avocado-wholewheat-toast.jpg",
+      "alt": "鸡蛋牛油果全麦吐司"
+    },
+    "totalTimeMinutes": 13
+  },
+  {
+    "id": "shrimp-tomato-soba",
+    "name": "虾仁番茄荞麦面",
+    "englishName": "Shrimp Tomato Soba",
+    "summary": "虾仁番茄汤汁拌荞麦面，酸甜清爽。",
+    "tags": [
+      "高蛋白",
+      "快手菜",
+      "荞麦面",
+      "番茄风味"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "shrimp",
+        "name": "虾仁",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "soba",
+        "name": "荞麦面",
+        "quantity": 90,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "干重"
+      },
+      {
+        "ingredientId": "tomato",
+        "name": "番茄",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "菠菜",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "garlic",
+        "name": "蒜",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮面",
+        "instruction": "荞麦面煮熟后沥干备用。",
+        "durationMinutes": 6
+      },
+      {
+        "order": 2,
+        "title": "炒虾",
+        "instruction": "锅中少油，虾仁炒至变色盛出。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 3,
+        "title": "炒番茄",
+        "instruction": "蒜末炒香，加番茄炒出汁，加少量水和生抽。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 4,
+        "title": "合炒",
+        "instruction": "加入菠菜、荞麦面和虾仁，快速翻匀即可。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "菠菜可换西兰花。",
+      "虾仁可换鸡胸。"
+    ],
+    "tips": [
+      "荞麦面不宜久煮，按包装时间即可。"
+    ],
+    "image": {
+      "src": "/images/recipes/shrimp-tomato-soba.jpg",
+      "alt": "虾仁番茄荞麦面"
+    },
+    "totalTimeMinutes": 20
+  },
+  {
+    "id": "chicken-broccoli-sweet-potato-plate",
+    "name": "鸡肉西兰花红薯餐",
+    "englishName": "Chicken Broccoli Sweet Potato Plate",
+    "summary": "鸡肉、红薯和西兰花的经典高蛋白盘餐。",
+    "tags": [
+      "高蛋白",
+      "蒸笼友好",
+      "低油",
+      "饱腹"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 20,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "chicken-breast",
+        "name": "鸡胸肉",
+        "quantity": 160,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "sweet-potato",
+        "name": "红薯",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "西兰花",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "红薯切块，鸡胸撒黑胡椒。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 2,
+        "title": "蒸红薯和鸡肉",
+        "instruction": "红薯和鸡胸入蒸笼，蒸至红薯软、鸡肉熟。",
+        "durationMinutes": 15
+      },
+      {
+        "order": 3,
+        "title": "加入西兰花",
+        "instruction": "最后 4–5 分钟加入西兰花。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 4,
+        "title": "装盘",
+        "instruction": "切鸡胸，和红薯西兰花装盘，淋橄榄油或生抽。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "鸡胸可换去皮鸡腿肉。",
+      "红薯可换南瓜。"
+    ],
+    "tips": [
+      "红薯切小块可缩短蒸制时间。"
+    ],
+    "image": {
+      "src": "/images/recipes/chicken-broccoli-sweet-potato-plate.jpg",
+      "alt": "鸡肉西兰花红薯餐"
+    },
+    "totalTimeMinutes": 28
+  },
+  {
+    "id": "beef-lettuce-wrap",
+    "name": "牛肉生菜包",
+    "englishName": "Beef Lettuce Wraps",
+    "summary": "炒牛肉末包进生菜，清爽又有口感。",
+    "tags": [
+      "高蛋白",
+      "低碳水",
+      "15分钟",
+      "快手菜"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 10,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "ground-beef",
+        "name": "牛肉末",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "lettuce",
+        "name": "生菜叶",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "选大叶"
+      },
+      {
+        "ingredientId": "mushroom",
+        "name": "蘑菇",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "bell-pepper",
+        "name": "彩椒",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "onion",
+        "name": "洋葱",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 10,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "sesame-oil",
+        "name": "香油",
+        "quantity": 3,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "生菜洗净沥干，蘑菇、彩椒、洋葱切小丁。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 2,
+        "title": "炒牛肉",
+        "instruction": "锅热下油，牛肉末炒散至变色。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 3,
+        "title": "加蔬菜",
+        "instruction": "放洋葱、蘑菇和彩椒炒熟，淋生抽和香油。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 4,
+        "title": "包着吃",
+        "instruction": "炒牛肉盛出，用生菜叶包着食用。",
+        "durationMinutes": 1
+      }
+    ],
+    "substitutions": [
+      "牛肉末可换鸡肉末或豆腐碎。",
+      "可配少量米饭增加饱腹。"
+    ],
+    "tips": [
+      "生菜一定沥干，包的时候不容易出水。"
+    ],
+    "image": {
+      "src": "/images/recipes/beef-lettuce-wrap.jpg",
+      "alt": "牛肉生菜包"
+    },
+    "totalTimeMinutes": 18
+  },
+  {
+    "id": "tofu-shrimp-vegetable-soup",
+    "name": "豆腐虾仁蔬菜汤",
+    "englishName": "Tofu Shrimp Vegetable Soup",
+    "summary": "虾仁、豆腐和蔬菜煮成轻盈汤餐。",
+    "tags": [
+      "高蛋白",
+      "低油",
+      "暖胃",
+      "一锅餐"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "shrimp",
+        "name": "虾仁",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "tofu",
+        "name": "北豆腐",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "西兰花",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "carrot",
+        "name": "胡萝卜",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "mushroom",
+        "name": "蘑菇",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broth",
+        "name": "清汤或清水",
+        "quantity": 450,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "ginger",
+        "name": "姜片",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 6,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮底汤",
+        "instruction": "清汤加姜片和胡萝卜煮开。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 2,
+        "title": "煮耐煮食材",
+        "instruction": "放蘑菇、豆腐和西兰花煮约 4 分钟。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "下虾仁",
+        "instruction": "虾仁放入煮至变色卷曲。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 4,
+        "title": "调味",
+        "instruction": "按口味加少量生抽，即可出锅。",
+        "durationMinutes": 1
+      }
+    ],
+    "substitutions": [
+      "西兰花可换菠菜，菠菜最后 1 分钟下。",
+      "虾仁可换鸡肉片。"
+    ],
+    "tips": [
+      "虾仁熟得很快，最后下锅。"
+    ],
+    "image": {
+      "src": "/images/recipes/tofu-shrimp-vegetable-soup.jpg",
+      "alt": "豆腐虾仁蔬菜汤"
+    },
+    "totalTimeMinutes": 20
+  },
+  {
+    "id": "chicken-mushroom-pasta",
+    "name": "鸡胸肉蘑菇意面",
+    "englishName": "Chicken Mushroom Pasta",
+    "summary": "鸡胸、蘑菇和意面，口感浓郁但不需要重奶油。",
+    "tags": [
+      "高蛋白",
+      "意面",
+      "快手菜",
+      "15分钟"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "pasta",
+        "name": "意面",
+        "quantity": 90,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "干重"
+      },
+      {
+        "ingredientId": "chicken-breast",
+        "name": "鸡胸肉",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "mushroom",
+        "name": "蘑菇",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "菠菜",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "garlic",
+        "name": "蒜",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "yogurt",
+        "name": "无糖酸奶",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选做轻酱"
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮面",
+        "instruction": "意面煮至刚熟，留少许面汤。",
+        "durationMinutes": 10
+      },
+      {
+        "order": 2,
+        "title": "炒鸡肉",
+        "instruction": "鸡胸切片，少油炒熟盛出。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "炒蘑菇",
+        "instruction": "蒜末和蘑菇炒至出香，加少许面汤。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 4,
+        "title": "拌匀",
+        "instruction": "加入意面、鸡肉、菠菜和无糖酸奶，快速拌匀，撒黑胡椒。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "酸奶可省略，改用少量橄榄油。",
+      "鸡胸可换虾仁。"
+    ],
+    "tips": [
+      "酸奶入锅后不要大火久煮，避免分离。"
+    ],
+    "image": {
+      "src": "/images/recipes/chicken-mushroom-pasta.jpg",
+      "alt": "鸡胸肉蘑菇意面"
+    },
+    "totalTimeMinutes": 25
+  },
+  {
+    "id": "tuna-egg-salad-bowl",
+    "name": "金枪鱼鸡蛋沙拉碗",
+    "englishName": "Tuna Egg Salad Bowl",
+    "summary": "金枪鱼、鸡蛋和多种蔬菜组成的轻午餐。",
+    "tags": [
+      "高蛋白",
+      "10分钟",
+      "低油",
+      "沙拉"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 8,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "canned-tuna",
+        "name": "水浸金枪鱼",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "沥干"
+      },
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 2,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "mixed-greens",
+        "name": "生菜混合叶",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cucumber",
+        "name": "黄瓜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cherry-tomato",
+        "name": "小番茄",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "corn",
+        "name": "玉米粒",
+        "quantity": 50,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "yogurt",
+        "name": "无糖酸奶",
+        "quantity": 35,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮蛋",
+        "instruction": "鸡蛋煮熟后冷却、剥壳切块。",
+        "durationMinutes": 8
+      },
+      {
+        "order": 2,
+        "title": "处理蔬菜",
+        "instruction": "生菜洗净沥干，黄瓜切片，番茄切开。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "调酱",
+        "instruction": "无糖酸奶和黑胡椒拌匀。",
+        "durationMinutes": 1
+      },
+      {
+        "order": 4,
+        "title": "组合",
+        "instruction": "所有食材装碗，放金枪鱼和鸡蛋，淋酸奶酱。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "金枪鱼可换撕碎鸡胸。",
+      "玉米可换毛豆。"
+    ],
+    "tips": [
+      "金枪鱼先沥干，沙拉不容易出水。"
+    ],
+    "image": {
+      "src": "/images/recipes/tuna-egg-salad-bowl.jpg",
+      "alt": "金枪鱼鸡蛋沙拉碗"
+    },
+    "totalTimeMinutes": 18
+  },
+  {
+    "id": "beef-broccoli-brown-rice",
+    "name": "牛肉西兰花糙米饭",
+    "englishName": "Beef Broccoli Brown Rice",
+    "summary": "牛肉、西兰花和糙米饭的饱腹午餐碗。",
+    "tags": [
+      "高蛋白",
+      "补铁",
+      "糙米",
+      "饱腹"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "beef",
+        "name": "牛肉片",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "西兰花",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "brown-rice",
+        "name": "熟糙米饭",
+        "quantity": 160,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "garlic",
+        "name": "蒜",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 10,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "焯西兰花",
+        "instruction": "西兰花焯水约 1 分钟，沥干。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 2,
+        "title": "炒牛肉",
+        "instruction": "锅热下油，蒜末炒香，牛肉快速炒至刚熟盛出。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 3,
+        "title": "炒西兰花",
+        "instruction": "西兰花入锅，淋少量生抽，翻炒入味。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 4,
+        "title": "组合",
+        "instruction": "牛肉回锅翻匀，与热糙米饭装碗。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "糙米可换白米或藜麦。",
+      "牛肉可换鸡胸。"
+    ],
+    "tips": [
+      "糙米可提前批量煮好冷藏。"
+    ],
+    "image": {
+      "src": "/images/recipes/beef-broccoli-brown-rice.jpg",
+      "alt": "牛肉西兰花糙米饭"
+    },
+    "totalTimeMinutes": 20
+  },
+  {
+    "id": "shrimp-tofu-steamed-egg-rice",
+    "name": "虾仁豆腐蒸蛋饭",
+    "englishName": "Shrimp Tofu Steamed Egg Rice",
+    "summary": "嫩蒸蛋里有虾仁和豆腐，配米饭就是一餐。",
+    "tags": [
+      "蒸笼友好",
+      "高蛋白",
+      "低油",
+      "暖胃"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 15,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 2,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "shrimp",
+        "name": "虾仁",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "tofu",
+        "name": "北豆腐",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "warm-water",
+        "name": "温水",
+        "quantity": 220,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "sesame-oil",
+        "name": "香油",
+        "quantity": 3,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "scallion",
+        "name": "葱花",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "调蛋液",
+        "instruction": "鸡蛋加温水打散，过筛到耐热碗。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 2,
+        "title": "放食材",
+        "instruction": "豆腐切小块和虾仁放入碗中。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 3,
+        "title": "蒸熟",
+        "instruction": "水开后中小火蒸约 12–15 分钟。",
+        "durationMinutes": 15
+      },
+      {
+        "order": 4,
+        "title": "配饭",
+        "instruction": "出锅淋生抽、香油和葱花，搭配热米饭。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "米饭可换红薯。",
+      "虾仁可换鸡肉丁。"
+    ],
+    "tips": [
+      "盖保鲜膜并扎小孔，蒸蛋表面更平整。"
+    ],
+    "image": {
+      "src": "/images/recipes/shrimp-tofu-steamed-egg-rice.jpg",
+      "alt": "虾仁豆腐蒸蛋饭"
+    },
+    "totalTimeMinutes": 23
+  },
+  {
+    "id": "tomato-egg-chicken-rice",
+    "name": "番茄鸡蛋鸡肉饭",
+    "englishName": "Tomato Egg Chicken Rice",
+    "summary": "番茄炒蛋加鸡肉，盖在米饭上，熟悉又方便。",
+    "tags": [
+      "高蛋白",
+      "番茄风味",
+      "快手菜",
+      "饭碗"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "chicken-breast",
+        "name": "鸡胸肉",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "切丁"
+      },
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 2,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "tomato",
+        "name": "番茄",
+        "quantity": 200,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "scallion",
+        "name": "葱花",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": "可选"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "炒蛋",
+        "instruction": "鸡蛋打散，锅中少油炒至凝固，盛出。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 2,
+        "title": "炒鸡肉",
+        "instruction": "鸡肉丁炒至变白熟透，盛出。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "炒番茄",
+        "instruction": "番茄切块炒出汁，加少量生抽。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 4,
+        "title": "合炒盖饭",
+        "instruction": "鸡肉和鸡蛋回锅翻匀，浇在米饭上，撒葱花。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "鸡胸可换虾仁。",
+      "米饭可换荞麦面。"
+    ],
+    "tips": [
+      "番茄选熟一些的，汁水更足。"
+    ],
+    "image": {
+      "src": "/images/recipes/tomato-egg-chicken-rice.jpg",
+      "alt": "番茄鸡蛋鸡肉饭"
+    },
+    "totalTimeMinutes": 20
+  },
+  {
+    "id": "chicken-thigh-pepper-pumpkin-plate",
+    "name": "鸡腿肉彩椒南瓜盘",
+    "englishName": "Chicken Thigh Pepper Pumpkin Plate",
+    "summary": "鸡腿肉、彩椒和南瓜的一盘式午餐。",
+    "tags": [
+      "高蛋白",
+      "蒸笼友好",
+      "低油",
+      "饱腹"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 20,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "chicken-thigh",
+        "name": "去皮鸡腿肉",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "pumpkin",
+        "name": "南瓜",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "bell-pepper",
+        "name": "彩椒",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "西兰花",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "准备",
+        "instruction": "鸡腿肉切块撒黑胡椒，南瓜切块，彩椒切条。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 2,
+        "title": "蒸南瓜",
+        "instruction": "南瓜先入蒸笼蒸 10 分钟。",
+        "durationMinutes": 10
+      },
+      {
+        "order": 3,
+        "title": "蒸鸡腿和蔬菜",
+        "instruction": "加入鸡腿肉、彩椒和西兰花，再蒸至鸡肉熟透。",
+        "durationMinutes": 10
+      },
+      {
+        "order": 4,
+        "title": "装盘",
+        "instruction": "所有食材装盘，淋少量橄榄油或生抽。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "南瓜可换红薯。",
+      "鸡腿肉可换鸡胸。"
+    ],
+    "tips": [
+      "鸡腿肉切小块能和南瓜一起熟。"
+    ],
+    "image": {
+      "src": "/images/recipes/chicken-thigh-pepper-pumpkin-plate.jpg",
+      "alt": "鸡腿肉彩椒南瓜盘"
+    },
+    "totalTimeMinutes": 30
+  },
+  {
+    "id": "salmon-mushroom-rice",
+    "name": "三文鱼菌菇饭",
+    "englishName": "Salmon Mushroom Rice Bowl",
+    "summary": "煎三文鱼配菌菇和米饭，鲜香饱腹。",
+    "tags": [
+      "高蛋白",
+      "优质脂肪",
+      "饭碗",
+      "快手菜"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "salmon",
+        "name": "三文鱼",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "mushroom",
+        "name": "混合菌菇",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cooked-rice",
+        "name": "熟米饭",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "菠菜",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 6,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煎三文鱼",
+        "instruction": "三文鱼擦干，少油煎至熟透，盛出。",
+        "durationMinutes": 7
+      },
+      {
+        "order": 2,
+        "title": "炒菌菇",
+        "instruction": "原锅下菌菇炒至出水收干，加少量生抽。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "处理菠菜",
+        "instruction": "菠菜焯水或直接入锅炒软。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 4,
+        "title": "装碗",
+        "instruction": "米饭打底，摆菌菇、菠菜和三文鱼，撒黑胡椒。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "三文鱼可换鸡胸。",
+      "菠菜可换西兰花。"
+    ],
+    "tips": [
+      "菌菇先大火炒出水再收干，香味更集中。"
+    ],
+    "image": {
+      "src": "/images/recipes/salmon-mushroom-rice.jpg",
+      "alt": "三文鱼菌菇饭"
+    },
+    "totalTimeMinutes": 20
+  },
+  {
+    "id": "egg-spinach-wholewheat-wrap",
+    "name": "鸡蛋菠菜全麦卷",
+    "englishName": "Egg Spinach Wholewheat Wrap",
+    "summary": "鸡蛋、菠菜和全麦饼皮的便携轻食。",
+    "tags": [
+      "10分钟",
+      "早餐",
+      "高蛋白",
+      "快手菜"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 6,
+    "cookTimeMinutes": 8,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "wholewheat-wrap",
+        "name": "全麦卷饼",
+        "quantity": 1,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "egg",
+        "name": "鸡蛋",
+        "quantity": 2,
+        "unit": "piece",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "菠菜",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "corn",
+        "name": "玉米粒",
+        "quantity": 40,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "cheese",
+        "name": "低脂奶酪",
+        "quantity": 20,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "可选"
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "食用油",
+        "quantity": 3,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "炒蛋菠菜",
+        "instruction": "锅中少油，先炒菠菜至变软，再倒入蛋液和玉米炒熟。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 2,
+        "title": "加调味",
+        "instruction": "撒黑胡椒，喜欢可加奶酪。",
+        "durationMinutes": 1
+      },
+      {
+        "order": 3,
+        "title": "卷起",
+        "instruction": "馅料放在全麦卷饼中间，两侧折起卷紧。",
+        "durationMinutes": 2
+      },
+      {
+        "order": 4,
+        "title": "加热定型",
+        "instruction": "卷饼放干锅两面各烙约 1 分钟。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "菠菜可换生菜。",
+      "全麦卷饼可换吐司。"
+    ],
+    "tips": [
+      "馅料不要放太多，卷起来更整齐。"
+    ],
+    "image": {
+      "src": "/images/recipes/egg-spinach-wholewheat-wrap.jpg",
+      "alt": "鸡蛋菠菜全麦卷"
+    },
+    "totalTimeMinutes": 14
+  },
+  {
+    "id": "tofu-beef-vegetable-hotpot",
+    "name": "豆腐牛肉蔬菜锅",
+    "englishName": "Tofu Beef Vegetable Hotpot",
+    "summary": "牛肉片、豆腐和蔬菜煮成一锅暖食。",
+    "tags": [
+      "高蛋白",
+      "补铁",
+      "一锅餐",
+      "暖胃"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "steamerFriendly": true,
+    "ingredients": [
+      {
+        "ingredientId": "beef",
+        "name": "牛肉片",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "tofu",
+        "name": "北豆腐",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "mushroom",
+        "name": "混合菌菇",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "bok-choy",
+        "name": "青菜",
+        "quantity": 120,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "carrot",
+        "name": "胡萝卜",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "broth",
+        "name": "清汤或清水",
+        "quantity": 450,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "ginger",
+        "name": "姜片",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮汤底",
+        "instruction": "清汤加姜片、胡萝卜煮开。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 2,
+        "title": "先煮配菜",
+        "instruction": "放菌菇和豆腐煮约 4 分钟。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "下牛肉",
+        "instruction": "牛肉片逐片放入，煮至变色熟透。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 4,
+        "title": "加青菜",
+        "instruction": "放青菜烫熟，少量生抽调味即可。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "牛肉可换鸡肉或虾仁。",
+      "青菜可换菠菜或白菜。"
+    ],
+    "tips": [
+      "牛肉片最后放，避免口感变老。"
+    ],
+    "image": {
+      "src": "/images/recipes/tofu-beef-vegetable-hotpot.jpg",
+      "alt": "豆腐牛肉蔬菜锅"
+    },
+    "totalTimeMinutes": 25
+  },
+  {
+    "id": "shrimp-avocado-salad",
+    "name": "虾仁牛油果沙拉",
+    "englishName": "Shrimp Avocado Salad",
+    "summary": "虾仁、牛油果和清爽蔬菜的高蛋白沙拉。",
+    "tags": [
+      "高蛋白",
+      "优质脂肪",
+      "10分钟",
+      "沙拉"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 5,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "shrimp",
+        "name": "虾仁",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "avocado",
+        "name": "牛油果",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "mixed-greens",
+        "name": "生菜混合叶",
+        "quantity": 100,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cucumber",
+        "name": "黄瓜",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "cherry-tomato",
+        "name": "小番茄",
+        "quantity": 80,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "lemon-juice",
+        "name": "柠檬汁",
+        "quantity": 10,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮虾",
+        "instruction": "虾仁沸水煮至变色，捞出沥干。",
+        "durationMinutes": 3
+      },
+      {
+        "order": 2,
+        "title": "准备蔬菜",
+        "instruction": "生菜洗净，黄瓜切片，番茄切开，牛油果切块。",
+        "durationMinutes": 5
+      },
+      {
+        "order": 3,
+        "title": "调酱",
+        "instruction": "橄榄油、柠檬汁和黑胡椒拌匀。",
+        "durationMinutes": 1
+      },
+      {
+        "order": 4,
+        "title": "组合",
+        "instruction": "所有食材装碗，淋酱轻拌即可。",
+        "durationMinutes": 1
+      }
+    ],
+    "substitutions": [
+      "虾仁可换三文鱼或鸡胸。",
+      "生菜可换菠菜。"
+    ],
+    "tips": [
+      "牛油果最后拌入，避免被压碎。"
+    ],
+    "image": {
+      "src": "/images/recipes/shrimp-avocado-salad.jpg",
+      "alt": "虾仁牛油果沙拉"
+    },
+    "totalTimeMinutes": 15
+  },
+  {
+    "id": "chicken-tomato-soba",
+    "name": "鸡胸肉番茄荞麦面",
+    "englishName": "Chicken Tomato Soba",
+    "summary": "鸡胸肉、番茄和荞麦面的轻盈一碗。",
+    "tags": [
+      "高蛋白",
+      "荞麦面",
+      "番茄风味",
+      "快手菜"
+    ],
+    "servings": 1,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 12,
+    "steamerFriendly": false,
+    "ingredients": [
+      {
+        "ingredientId": "chicken-breast",
+        "name": "鸡胸肉",
+        "quantity": 150,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "soba",
+        "name": "荞麦面",
+        "quantity": 90,
+        "unit": "g",
+        "trackInventory": true,
+        "note": "干重"
+      },
+      {
+        "ingredientId": "tomato",
+        "name": "番茄",
+        "quantity": 180,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "菠菜",
+        "quantity": 60,
+        "unit": "g",
+        "trackInventory": true,
+        "note": ""
+      },
+      {
+        "ingredientId": "garlic",
+        "name": "蒜",
+        "quantity": 5,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "olive-oil",
+        "name": "橄榄油",
+        "quantity": 5,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "生抽",
+        "quantity": 8,
+        "unit": "ml",
+        "trackInventory": false,
+        "note": ""
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "黑胡椒",
+        "quantity": 1,
+        "unit": "g",
+        "trackInventory": false,
+        "note": ""
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "煮面",
+        "instruction": "荞麦面煮熟后沥干。",
+        "durationMinutes": 6
+      },
+      {
+        "order": 2,
+        "title": "炒鸡肉",
+        "instruction": "鸡胸切片，少油炒至熟透盛出。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 3,
+        "title": "炒番茄",
+        "instruction": "蒜末炒香，放番茄炒出汁，加入少量水和生抽。",
+        "durationMinutes": 4
+      },
+      {
+        "order": 4,
+        "title": "合炒",
+        "instruction": "加入鸡肉、荞麦面和菠菜，翻匀后撒黑胡椒。",
+        "durationMinutes": 2
+      }
+    ],
+    "substitutions": [
+      "鸡胸可换虾仁。",
+      "菠菜可换西兰花。"
+    ],
+    "tips": [
+      "面条入锅后快速拌匀，避免变软。"
+    ],
+    "image": {
+      "src": "/images/recipes/chicken-tomato-soba.jpg",
+      "alt": "鸡胸肉番茄荞麦面"
+    },
+    "totalTimeMinutes": 20
+  }
+]

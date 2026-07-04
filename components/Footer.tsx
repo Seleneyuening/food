@@ -1,8 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BrandMark } from "@/components/BrandMark";
 import { navLinks } from "@/lib/content";
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/recipes/")) return null;
+
   return (
     <footer className="border-t border-[#e9dfcf] bg-[#fbf8ef] px-5 py-10 text-[#6f7668]">
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1fr_auto]">

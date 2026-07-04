@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Clock3,
   Coffee,
+  Heart,
   History,
   Moon,
   RefreshCw,
@@ -28,6 +29,7 @@ import {
   defaultMealPlan,
   Ingredient,
   InventoryLog,
+  legacyRecipeIdMap,
   MealPlan,
   Recipe,
   recipes
@@ -50,7 +52,9 @@ function withDefaults(store: Store): Store {
       if (!savedItem || typeof savedItem.unit !== "string" || !Number.isFinite(savedItem.currentQuantity) || !Number.isFinite(savedItem.initialQuantity)) return item;
       return { ...item, ...savedItem };
     }),
-    mealPlan: store.mealPlan?.length ? store.mealPlan : defaultMealPlan,
+    mealPlan: store.mealPlan?.length
+      ? store.mealPlan.map((day) => ({ ...day, lunchRecipeId: legacyRecipeIdMap[day.lunchRecipeId] ?? day.lunchRecipeId }))
+      : defaultMealPlan,
     logs: store.logs ?? []
   };
 }
@@ -87,29 +91,32 @@ function id() {
 
 function recipeScore(recipe: Recipe, ingredients: Ingredient[]) {
   const urgent = ingredients.filter((item) => daysLeft(item.expiryDate) <= 2).map((item) => item.id);
-  const owned = recipe.ingredients.filter((part) => {
-    const item = ingredients.find((candidate) => candidate.id === part.ingredientId);
-    return item && item.currentQuantity >= part.quantity;
+  const tracked = trackedIngredients(recipe);
+  const owned = tracked.filter((part) => {
+    const item = ingredients.find((candidate) => candidate.id === inventoryId(part.ingredientId));
+    const current = item ? asRecipeQuantity(item, part) : null;
+    return current !== null && current >= part.quantity;
   }).length;
-  const urgentHit = recipe.ingredients.find((part) => urgent.includes(part.ingredientId));
+  const urgentHit = tracked.find((part) => urgent.includes(inventoryId(part.ingredientId)));
   return {
-    score: owned / recipe.ingredients.length + (urgentHit ? 1 : 0),
-    percent: Math.round((owned / recipe.ingredients.length) * 100),
-    missing: recipe.ingredients.length - owned,
+    score: owned / tracked.length + (urgentHit ? 1 : 0),
+    percent: Math.round((owned / tracked.length) * 100),
+    missing: tracked.length - owned,
     reason: urgentHit ? `优先消耗${urgentHit.name}` : "现有食材友好"
   };
 }
 
 function missingForRecipe(recipe: Recipe, ingredients: Ingredient[]) {
-  return recipe.ingredients.flatMap((part) => {
-    const item = ingredients.find((candidate) => candidate.id === part.ingredientId);
-    const current = item?.currentQuantity ?? 0;
+  return trackedIngredients(recipe).flatMap((part) => {
+    const item = ingredients.find((candidate) => candidate.id === inventoryId(part.ingredientId));
+    const current = item ? (asRecipeQuantity(item, part) ?? 0) : 0;
     return current >= part.quantity ? [] : [{ ...part, missing: part.quantity - current }];
   });
 }
 
 function availablePercent(recipe: Recipe, ingredients: Ingredient[]) {
-  return Math.round(((recipe.ingredients.length - missingForRecipe(recipe, ingredients).length) / recipe.ingredients.length) * 100);
+  const total = trackedIngredients(recipe).length;
+  return Math.round(((total - missingForRecipe(recipe, ingredients).length) / total) * 100);
 }
 
 function prepTips(recipe: Recipe) {
@@ -117,6 +124,40 @@ function prepTips(recipe: Recipe) {
     if (["salmon", "shrimp", "beef", "chicken-breast", "chicken-thigh"].includes(part.ingredientId)) return `${part.name}解冻`;
     return part.name;
   });
+}
+
+const ingredientIdMap: Record<string, string> = {
+  "bell-pepper": "pepper",
+  "cooked-rice": "rice",
+  "mixed-greens": "lettuce",
+  "cherry-tomato": "tomato",
+  "canned-tuna": "tuna",
+  "wholewheat-bread": "toast",
+  "wholewheat-wrap": "wrap"
+};
+
+function inventoryId(id: string) {
+  return ingredientIdMap[id] ?? id;
+}
+
+function asInventoryQuantity(part: Recipe["ingredients"][number], item: Ingredient) {
+  if (part.unit === item.unit) return part.quantity;
+  if (part.unit === "piece" && ["个", "张"].includes(item.unit)) return part.quantity;
+  if (part.unit === "slice" && item.unit === "片") return part.quantity;
+  if (part.ingredientId === "avocado" && part.unit === "g" && item.unit === "个") return part.quantity / 160;
+  return null;
+}
+
+function asRecipeQuantity(item: Ingredient, part: Recipe["ingredients"][number]) {
+  if (part.unit === item.unit) return item.currentQuantity;
+  if (part.unit === "piece" && ["个", "张"].includes(item.unit)) return item.currentQuantity;
+  if (part.unit === "slice" && item.unit === "片") return item.currentQuantity;
+  if (part.ingredientId === "avocado" && part.unit === "g" && item.unit === "个") return item.currentQuantity * 160;
+  return null;
+}
+
+function trackedIngredients(recipe: Recipe) {
+  return recipe.ingredients.filter((part) => part.trackInventory);
 }
 
 function getCurrentWeekIndex(date = new Date()) {
@@ -130,7 +171,7 @@ function weekDateLabel(index: number, base = new Date()) {
   return `${date.getMonth() + 1}/${date.getDate()}`;
 }
 
-export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | "recipes" | "shopping" | "history" }) {
+export function LightMealApp({ view = "home", recipeId }: { view?: "home" | "inventory" | "recipes" | "shopping" | "history" | "recipe"; recipeId?: string }) {
   const [store, setStore] = useState<Store>({ ingredients: defaultIngredients, logs: defaultLogs, mealPlan: defaultMealPlan });
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState("家里库存");
@@ -237,29 +278,36 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
 
   function completeLunch(recipe: Recipe) {
     const createdAt = new Date().toISOString();
-    const logs = recipe.ingredients.map((part) => {
-      const ingredient = store.ingredients.find((item) => item.id === part.ingredientId);
+    const deductions = trackedIngredients(recipe).flatMap((part) => {
+      const ingredient = store.ingredients.find((item) => item.id === inventoryId(part.ingredientId));
+      if (!ingredient) return [];
+      const quantity = asInventoryQuantity(part, ingredient);
+      if (quantity === null) return [];
+      return [{ part, ingredient, quantity }];
+    });
+    const logs = deductions.map(({ part, ingredient, quantity }) => {
       return {
         id: id(),
-        ingredientId: part.ingredientId,
+        ingredientId: ingredient.id,
         type: "auto_deduct" as const,
-        quantityChange: -part.quantity,
-        unit: ingredient?.unit ?? part.unit,
+        quantityChange: -quantity,
+        unit: ingredient.unit,
         note: `今日午餐：${recipe.name}`,
         sourceRecipeId: recipe.id,
         createdAt
       };
     });
+    const completesToday = recipe.id === (store.mealPlan[todayIndex] ?? defaultMealPlan[todayIndex])?.lunchRecipeId;
     setStore((current) => ({
       ...current,
       ingredients: current.ingredients.map((item) => {
-        const used = recipe.ingredients.find((part) => part.ingredientId === item.id);
+        const used = deductions.find((deduction) => deduction.ingredient.id === item.id);
         return used ? { ...item, currentQuantity: Math.max(0, item.currentQuantity - used.quantity), updatedAt: createdAt } : item;
       }),
       logs: [...logs, ...current.logs],
       lastDeduct: logs,
       mealPlan: current.mealPlan.map((day, index) =>
-        index === todayIndex ? { ...day, completedStatus: { ...day.completedStatus, lunch: true } } : day
+        index === todayIndex && completesToday ? { ...day, completedStatus: { ...day.completedStatus, lunch: true } } : day
       )
     }));
   }
@@ -305,7 +353,6 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
           activeDay={activeDay}
           activeDayIndex={activeDayIndex}
           activeRecipe={activeRecipe}
-          completion={completion}
           ingredients={store.ingredients}
           mealPlan={store.mealPlan}
           onComplete={() => setPendingRecipe(activeRecipe)}
@@ -338,7 +385,16 @@ export function LightMealApp({ view = "home" }: { view?: "home" | "inventory" | 
       )}
       {view === "shopping" && <MobileShoppingPage ingredients={store.ingredients} onRestock={restock} />}
       {view === "history" && <MobileHistoryPage ingredients={store.ingredients} logs={store.logs} />}
-      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view !== "home" ? "hidden lg:block" : "hidden lg:block"}`}>
+      {view === "recipe" && (
+        <MobileRecipeDetailPage
+          canUndo={Boolean(store.lastDeduct?.length)}
+          ingredients={store.ingredients}
+          onComplete={(recipe) => setPendingRecipe(recipe)}
+          onUndo={undoLastDeduct}
+          recipe={recipes.find((recipe) => recipe.id === recipeId) ?? recipes[0]}
+        />
+      )}
+      <section className={`mx-auto max-w-[88rem] px-4 pb-14 pt-7 sm:px-6 ${view === "recipe" ? "hidden" : "hidden lg:block"}`}>
         <div className="grid gap-5 lg:grid-cols-[.72fr_1.28fr]">
           <div className="rounded-[14px] border border-[#ece6dc] bg-white p-8 shadow-[0_16px_42px_rgba(70,63,48,.08)]">
             <h1 className="font-serif text-[27px] leading-tight text-[#2f4328]">Good morning, Selene <span className="text-[#7f966b]">枝</span></h1>
@@ -495,7 +551,6 @@ function MobileHome({
   activeDay,
   activeDayIndex,
   activeRecipe,
-  completion,
   ingredients,
   mealPlan,
   onComplete,
@@ -510,7 +565,6 @@ function MobileHome({
   activeDay: MealPlan;
   activeDayIndex: number;
   activeRecipe: Recipe;
-  completion: number;
   ingredients: Ingredient[];
   mealPlan: MealPlan[];
   onComplete: () => void;
@@ -525,7 +579,6 @@ function MobileHome({
   const keyItems = ["milk", "egg", "spinach", "blueberry", "yogurt", "banana"]
     .map((key) => ingredients.find((item) => item.id === key))
     .filter(Boolean) as Ingredient[];
-  const steamRecipe = recipes.find((recipe) => recipe.id === "shrimp-corn-egg") ?? activeRecipe;
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pickerDayIndex, setPickerDayIndex] = useState(activeDayIndex);
   const [pickerRecipeId, setPickerRecipeId] = useState(activeRecipe.id);
@@ -569,7 +622,9 @@ function MobileHome({
             return (
               <button
                 key={day.date}
-                onClick={() => onSelectRecipe(recipe.id)}
+                onClick={() => {
+                  window.location.href = `/recipes/${recipe.id}`;
+                }}
                 className={`min-h-36 w-[86px] shrink-0 snap-center rounded-[22px] border p-2 text-center transition ${active ? "scale-105 border-[#6f835e] bg-[#f3f7ed] shadow-[0_12px_30px_rgba(95,122,79,.16)]" : "border-[#ece6dc] bg-white/80 opacity-80"}`}
               >
                 <span className="block text-xs font-semibold text-[#5d6558]">{day.date}</span>
@@ -602,29 +657,6 @@ function MobileHome({
         </div>
       </section>
 
-      <section id="shopping" className="mt-3 grid grid-cols-2 gap-3">
-        <div id="steam" className="rounded-[22px] border border-[#ece6dc] bg-white p-3 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
-          <div className="flex items-center justify-between">
-            <h2 className="font-serif text-base text-[#2f4328]">今天蒸什么</h2>
-            <span className="rounded-full bg-[#e6ecd8] px-2 py-1 text-[10px] text-[#6f835e]">蒸着吃</span>
-          </div>
-          <RecipeImage recipe={steamRecipe} className="mt-3 h-24 rounded-2xl" />
-          <h3 className="mt-3 line-clamp-1 font-semibold">{steamRecipe.name}</h3>
-          <p className="mt-1 text-xs text-[#777568]">准备 5 分钟 · 蒸 15 分钟</p>
-        </div>
-        <div className="rounded-[22px] border border-[#ece6dc] bg-white p-3 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
-          <h2 className="font-serif text-base text-[#2f4328]">今日完成度</h2>
-          <div className="mt-4 grid place-items-center">
-            <MobileProgress value={completion * 25} />
-          </div>
-          <div className="mt-3 space-y-2 text-xs text-[#6c7065]">
-            <MobileCheck label="早餐" done={today.completedStatus.breakfast} />
-            <MobileCheck label="午餐" done={today.completedStatus.lunch} />
-            <MobileCheck label="待完成" done={today.completedStatus.snack} />
-            <MobileCheck label="晚餐" done={today.completedStatus.dinner} />
-          </div>
-        </div>
-      </section>
       {pickerOpen && (
         <MobileRecipePicker
           currentRecipe={recipes.find((recipe) => recipe.id === mealPlan[pickerDayIndex]?.lunchRecipeId) ?? activeRecipe}
@@ -703,7 +735,7 @@ function MobileRecipePicker({
                 <span className="mt-1 flex flex-wrap gap-1">
                   {recipe.tags.slice(0, 2).map((item) => <span key={item} className="rounded-full bg-[#eef3e7] px-2 py-0.5 text-[10px] text-[#5d7056]">{item}</span>)}
                 </span>
-                <span className="mt-1 block text-xs text-[#777568]"><Clock3 className="mr-1 inline h-3.5 w-3.5" />{recipe.prepTime + recipe.cookTime} 分钟</span>
+                <span className="mt-1 block text-xs text-[#777568]"><Clock3 className="mr-1 inline h-3.5 w-3.5" />{recipe.prepTimeMinutes + recipe.cookTimeMinutes} 分钟</span>
               </span>
               <span className={`grid h-6 w-6 place-items-center rounded-full border ${selectedRecipeId === recipe.id ? "border-[#6f835e] bg-[#6f835e] text-white" : "border-[#d8d0c2]"}`}>
                 {selectedRecipeId === recipe.id && <Check className="h-4 w-4" />}
@@ -810,16 +842,16 @@ function MobileRecipesPage({
 
       <div className="mt-3 grid grid-cols-2 gap-3">
         {filtered.map((recipe) => (
-          <button key={recipe.id} onClick={() => openPicker(recipe.id)} className="overflow-hidden rounded-[18px] border border-[#ece6dc] bg-white text-left shadow-[0_10px_26px_rgba(70,63,48,.06)]">
+          <Link key={recipe.id} href={`/recipes/${recipe.id}`} className="overflow-hidden rounded-[18px] border border-[#ece6dc] bg-white text-left shadow-[0_10px_26px_rgba(70,63,48,.06)]">
             <RecipeImage recipe={recipe} className="h-28" />
             <div className="p-3">
               <h2 className="line-clamp-1 font-semibold">{recipe.name}</h2>
               <div className="mt-2 flex flex-wrap gap-1">
                 {recipe.tags.slice(0, 2).map((item) => <span key={item} className="rounded-full bg-[#eef3e7] px-2 py-0.5 text-[10px] text-[#5d7056]">{item}</span>)}
               </div>
-              <p className="mt-2 text-xs text-[#777568]"><Clock3 className="mr-1 inline h-3.5 w-3.5" />{recipe.prepTime + recipe.cookTime} 分钟</p>
+              <p className="mt-2 text-xs text-[#777568]"><Clock3 className="mr-1 inline h-3.5 w-3.5" />{recipe.prepTimeMinutes + recipe.cookTimeMinutes} 分钟</p>
             </div>
-          </button>
+          </Link>
         ))}
       </div>
 
@@ -880,7 +912,7 @@ function MobileRecipeHero({ canUndo, day, onComplete, onUndo, recipe }: { canUnd
   return (
     <section className="relative mt-4 h-[420px] overflow-hidden rounded-[26px] border border-[#ece6dc] bg-[#eee6d8] shadow-[0_18px_42px_rgba(70,63,48,.12)]">
       <RecipeImage recipe={recipe} className="h-full" />
-      <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-[#fffaf0]/95 via-[#fffaf0]/72 to-transparent p-5">
+      <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-[#fffaf0]/78 via-[#fffaf0]/34 to-transparent p-5">
         <p className="font-serif text-xs uppercase tracking-[.18em] text-[#607052]">TODAY&apos;S TABLE</p>
         <div className="mt-3 flex items-center gap-2">
           <h1 className="font-serif text-3xl leading-tight text-[#1f241e]">{recipe.name}</h1>
@@ -891,12 +923,12 @@ function MobileRecipeHero({ canUndo, day, onComplete, onUndo, recipe }: { canUnd
         </div>
       </div>
       <div className="absolute inset-x-4 bottom-4">
-        <div className="mb-3 grid grid-cols-2 rounded-2xl bg-white/82 text-center text-xs text-[#777568] backdrop-blur">
-          <span className="border-r border-[#e9dfcf] py-3"><Clock3 className="mr-1 inline h-4 w-4 text-[#9dad8f]" />准备 <b className="text-[#2f332c]">{recipe.prepTime} 分钟</b></span>
-          <span className="py-3"><Clock3 className="mr-1 inline h-4 w-4 text-[#9dad8f]" />烹饪 <b className="text-[#2f332c]">{recipe.cookTime} 分钟</b></span>
+        <div className="mb-3 grid grid-cols-2 rounded-2xl bg-white/76 text-center text-xs text-[#777568]">
+          <span className="border-r border-[#e9dfcf] py-3"><Clock3 className="mr-1 inline h-4 w-4 text-[#9dad8f]" />准备 <b className="text-[#2f332c]">{recipe.prepTimeMinutes} 分钟</b></span>
+          <span className="py-3"><Clock3 className="mr-1 inline h-4 w-4 text-[#9dad8f]" />烹饪 <b className="text-[#2f332c]">{recipe.cookTimeMinutes} 分钟</b></span>
         </div>
         <div className="grid grid-cols-2 gap-3">
-          <a href="#steam" className="grid min-h-11 place-items-center rounded-full bg-white/92 text-sm font-semibold text-[#5f7a4f]">查看做法</a>
+          <Link href={`/recipes/${recipe.id}`} className="grid min-h-11 place-items-center rounded-full bg-white/92 text-sm font-semibold text-[#5f7a4f]">查看做法</Link>
           <button onClick={onComplete} className="min-h-11 rounded-full bg-[#6f835e] px-3 text-sm font-semibold text-white">完成并扣库存</button>
         </div>
         {canUndo && <button onClick={onUndo} className="mt-2 min-h-11 w-full rounded-full bg-[#f0eadf]/95 text-sm text-[#4f554b]">撤销本次扣减</button>}
@@ -1140,17 +1172,123 @@ function MobileProgress({ value }: { value: number }) {
   );
 }
 
-function MobileCheck({ label, done }: { label: string; done: boolean }) {
-  return (
-    <div className="flex items-center justify-between">
-      <span>{label}</span>
-      <Check className={`h-3.5 w-3.5 ${done ? "text-[#6f835e]" : "text-[#c9c2b5]"}`} />
-    </div>
-  );
-}
-
 function shortName(name: string) {
   return name.length > 7 ? `${name.slice(0, 7)}…` : name;
+}
+
+function formatTimer(seconds: number) {
+  const minutes = Math.floor(seconds / 60);
+  const rest = seconds % 60;
+  return `${minutes}:${String(rest).padStart(2, "0")}`;
+}
+
+function MobileRecipeDetailPage({
+  canUndo,
+  ingredients,
+  onComplete,
+  onUndo,
+  recipe
+}: {
+  canUndo: boolean;
+  ingredients: Ingredient[];
+  onComplete: (recipe: Recipe) => void;
+  onUndo: () => void;
+  recipe: Recipe;
+}) {
+  const [stepIndex, setStepIndex] = useState(0);
+  const [timerSeconds, setTimerSeconds] = useState(0);
+  const step = recipe.steps[stepIndex] ?? recipe.steps[0];
+  const missing = missingForRecipe(recipe, ingredients);
+
+  useEffect(() => {
+    if (!timerSeconds) return;
+    const timer = window.setInterval(() => setTimerSeconds((current) => Math.max(0, current - 1)), 1000);
+    return () => window.clearInterval(timer);
+  }, [timerSeconds]);
+
+  return (
+    <section className="mx-auto max-w-md bg-[#fbfaf6] pb-28 text-[#2f332c] lg:max-w-2xl">
+      <div className="sticky top-0 z-20 flex items-center justify-between bg-[#fbfaf6]/90 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+12px)] backdrop-blur">
+        <button onClick={() => window.history.back()} className="grid h-11 w-11 place-items-center rounded-full bg-white shadow-[0_8px_20px_rgba(70,63,48,.08)]" aria-label="返回">
+          <ChevronRight className="h-5 w-5 rotate-180" />
+        </button>
+        <p className="font-serif text-lg text-[#2f4328]">菜谱详情</p>
+        <button className="grid h-11 w-11 place-items-center rounded-full bg-white shadow-[0_8px_20px_rgba(70,63,48,.08)]" aria-label="收藏">
+          <Heart className="h-5 w-5 text-[#6f835e]" />
+        </button>
+      </div>
+
+      <div className="px-4">
+        <RecipeImage recipe={recipe} className="h-72 rounded-[28px]" />
+      </div>
+
+      <div className="px-4">
+        <div className="mt-5 flex flex-wrap gap-1.5">
+          {recipe.tags.map((tag) => <span key={tag} className="rounded-full bg-[#eef3e7] px-2.5 py-1 text-[11px] text-[#5d7056]">{tag}</span>)}
+        </div>
+        <h1 className="mt-3 font-serif text-3xl leading-tight text-[#1f241e]">{recipe.name}</h1>
+        <p className="mt-2 text-sm leading-6 text-[#777568]">{recipe.summary}</p>
+        <div className="mt-4 grid grid-cols-3 rounded-2xl bg-white text-center text-xs text-[#777568] shadow-[0_10px_26px_rgba(70,63,48,.06)]">
+          <span className="border-r border-[#eee7dc] py-3">准备<br /><b className="text-[#2f332c]">{recipe.prepTimeMinutes} 分钟</b></span>
+          <span className="border-r border-[#eee7dc] py-3">烹饪<br /><b className="text-[#2f332c]">{recipe.cookTimeMinutes} 分钟</b></span>
+          <span className="py-3">总计<br /><b className="text-[#2f332c]">{recipe.totalTimeMinutes} 分钟</b></span>
+        </div>
+
+        <section className="mt-5 rounded-[24px] border border-[#ece6dc] bg-white p-4 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
+          <div className="flex items-center justify-between">
+            <h2 className="font-serif text-xl text-[#2f4328]">食材清单</h2>
+            {missing.length ? <span className="rounded-full bg-[#f8ded9] px-2.5 py-1 text-xs text-[#9b4d45]">缺 {missing.length} 样</span> : <span className="rounded-full bg-[#dfe9dc] px-2.5 py-1 text-xs text-[#536f56]">库存足够</span>}
+          </div>
+          <div className="mt-4 space-y-2">
+            {recipe.ingredients.map((part) => {
+              const item = ingredients.find((ingredient) => ingredient.id === inventoryId(part.ingredientId));
+              const current = item ? asRecipeQuantity(item, part) : null;
+              const short = part.trackInventory && (current === null || current < part.quantity);
+              return (
+                <label key={`${part.ingredientId}-${part.name}`} className="flex items-center gap-3 rounded-2xl bg-[#fbfaf6] px-3 py-3 text-sm">
+                  <input type="checkbox" className="h-4 w-4 accent-[#6f835e]" />
+                  <span className="min-w-0 flex-1">
+                    <b className="block truncate">{part.name}</b>
+                    {part.note && <span className="block truncate text-xs text-[#938d80]">{part.note}</span>}
+                  </span>
+                  <span className="text-right text-xs text-[#6f675b]">
+                    {part.quantity}{part.unit}
+                    {!part.trackInventory && <span className="ml-1 text-[#a18862]">调味</span>}
+                    {short && <span className="block text-[#a05a50]">缺少</span>}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="mt-5 rounded-[24px] border border-[#ece6dc] bg-white p-4 shadow-[0_12px_30px_rgba(70,63,48,.06)]">
+          <div className="flex items-center justify-between">
+            <h2 className="font-serif text-xl text-[#2f4328]">开始做菜</h2>
+            <span className="rounded-full bg-[#eef3e7] px-3 py-1 text-xs text-[#5d7056]">{stepIndex + 1} / {recipe.steps.length}</span>
+          </div>
+          <article className="mt-4 rounded-[22px] bg-[#fbfaf6] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#7f966b]">STEP {step.order}</p>
+            <h3 className="mt-2 font-serif text-2xl text-[#1f241e]">{step.title}</h3>
+            <p className="mt-3 text-sm leading-7 text-[#565b51]">{step.instruction}</p>
+            <p className="mt-4 text-sm text-[#817d70]"><Clock3 className="mr-1 inline h-4 w-4" />预计 {step.durationMinutes} 分钟</p>
+            {step.durationMinutes >= 5 && (
+              <button onClick={() => setTimerSeconds(step.durationMinutes * 60)} className="mt-3 min-h-11 rounded-full bg-[#f0eadf] px-4 text-sm font-semibold text-[#5f6f51]">
+                {timerSeconds ? `计时中 ${formatTimer(timerSeconds)}` : "开始计时"}
+              </button>
+            )}
+          </article>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <button onClick={() => setStepIndex(Math.max(0, stepIndex - 1))} className="min-h-11 rounded-full bg-[#f0eadf] text-sm text-[#555a50]">上一步</button>
+            <button onClick={() => setStepIndex(Math.min(recipe.steps.length - 1, stepIndex + 1))} className="min-h-11 rounded-full bg-[#6f835e] text-sm font-semibold text-white">下一步</button>
+          </div>
+        </section>
+
+        <button onClick={() => onComplete(recipe)} className="mt-5 min-h-12 w-full rounded-full bg-[#6f835e] text-sm font-semibold text-white">完成并扣库存</button>
+        {canUndo && <button onClick={onUndo} className="mt-3 min-h-11 w-full rounded-full bg-[#f0eadf] text-sm text-[#4f554b]">撤销本次扣减</button>}
+      </div>
+    </section>
+  );
 }
 
 function PlanCard({
@@ -1299,7 +1437,7 @@ function DeductDialog({ recipe, onCancel, onConfirm }: { recipe: Recipe; onCance
           </button>
         </div>
         <div className="mt-5 grid gap-2">
-          {recipe.ingredients.map((item) => (
+          {trackedIngredients(recipe).map((item) => (
             <div key={item.ingredientId} className="flex items-center justify-between rounded-lg bg-[#f7f1e7] px-4 py-3 text-sm">
               <span>{item.name}</span>
               <span className="text-[#a05a50]">-{item.quantity}{item.unit}</span>
@@ -1455,7 +1593,7 @@ function RecipeDetail({ recipe, ingredients }: { recipe: Recipe; ingredients: In
           {recipe.tags.map((tag) => <span key={tag} className="rounded-full bg-[#eef3e7] px-3 py-1 text-xs text-[#5d7056]">{tag}</span>)}
         </div>
         <h3 className="mt-3 font-serif text-2xl">{recipe.name}</h3>
-        <p className="mt-2 flex items-center gap-2 text-sm text-[#817d70]"><Clock3 className="h-4 w-4" />准备 {recipe.prepTime} 分钟 / 烹饪 {recipe.cookTime} 分钟</p>
+        <p className="mt-2 flex items-center gap-2 text-sm text-[#817d70]"><Clock3 className="h-4 w-4" />准备 {recipe.prepTimeMinutes} 分钟 / 烹饪 {recipe.cookTimeMinutes} 分钟</p>
         <div className="mt-4 grid gap-2 text-sm">
           {recipe.ingredients.map((part) => {
             const item = ingredients.find((ingredient) => ingredient.id === part.ingredientId);

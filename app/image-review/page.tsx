@@ -30,7 +30,7 @@ export default function ImageReviewPage() {
                 <div className="space-y-2 p-4 text-sm">
                   <div className="flex items-start justify-between gap-3">
                     <h2 className="font-serif text-lg text-[#2f4328]">{recipe.name}</h2>
-                    <span className="rounded-full bg-[#dfe9dc] px-2 py-1 text-[11px] text-[#536f56]">{image?.status ?? "placeholder"}</span>
+                    <span className="rounded-full bg-[#dfe9dc] px-2 py-1 text-[11px] text-[#536f56]">{image ? "approved" : "placeholder"}</span>
                   </div>
                   <p className="break-all text-xs text-[#777568]">id: {recipe.id}</p>
                   <p className="break-all text-xs text-[#777568]">{src}</p>
