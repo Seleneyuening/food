@@ -7,7 +7,7 @@ import { navLinks } from "@/lib/content";
 
 export function Footer() {
   const pathname = usePathname();
-  if (pathname.startsWith("/recipes/")) return null;
+  if (pathname === "/" || pathname.startsWith("/recipes/")) return null;
 
   return (
     <footer className="border-t border-[#e9dfcf] bg-[#fbf8ef] px-5 py-10 text-[#6f7668]">

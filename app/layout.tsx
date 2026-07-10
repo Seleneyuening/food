@@ -4,8 +4,8 @@ import { Navbar } from "@/components/Navbar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "轻食日历",
-  description: "每日饮食计划、家中食材库存和轻食菜单推荐。"
+  title: "Aster Shore — A living digital world",
+  description: "A quiet digital world for ideas, rituals and beautiful living."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

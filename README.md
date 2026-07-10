@@ -1,15 +1,18 @@
 # Aster Shore
 
-主品牌官网第一版：Next.js + TypeScript + Tailwind CSS，无数据库、无登录、无 CMS、无邮件服务。
+主品牌官网第一版：Next.js + TypeScript + Tailwind CSS。Supabase Auth 保护个人轻食工具页面。
 
 ## 本地运行
 
 ```bash
 npm install
+cp .env.local.example .env.local
 npm run dev
 ```
 
 打开 `http://localhost:3000`。
+
+`.env.local` 里填 Supabase Project URL 和 Publishable key。不要把 secret key 或 service role key 放进前端环境变量。
 
 ## 部署到 Vercel
 
@@ -17,6 +20,8 @@ npm run dev
 2. 在 Vercel 新建项目，选择这个仓库。
 3. Framework 选择 Next.js，默认构建命令 `npm run build`。
 4. 部署即可。
+
+部署环境变量同样需要设置 `NEXT_PUBLIC_SUPABASE_URL` 和 `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`。
 
 ## 绑定 astershore.com
 

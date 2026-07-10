@@ -1,5 +1,5 @@
-import { LightMealApp } from "@/components/LightMealApp";
+import { AsterHome } from "@/components/AsterHome";
 
 export default function HomePage() {
-  return <LightMealApp view="home" />;
+  return <AsterHome />;
 }
