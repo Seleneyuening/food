@@ -9,12 +9,8 @@ import {
   ArrowRight,
   BookOpen,
   ChartNoAxesCombined,
-  Globe2,
-  Heart,
   Monitor,
   MousePointer2,
-  Rocket,
-  Sparkles,
   WandSparkles,
 } from "lucide-react";
 import { LivingAtmosphere } from "@/components/LivingAtmosphere";
@@ -24,13 +20,6 @@ const floatingCards = [
   { title: "Digital Growth", body: "Strategies that\ndrive results.", icon: ChartNoAxesCombined, position: "growth" },
   { title: "Web Design", body: "Beautiful websites\nthat perform.", icon: Monitor, position: "design" },
   { title: "Content & Story", body: "Stories that connect\nand inspire.", icon: BookOpen, position: "story" },
-];
-
-const stats = [
-  { value: "30+", label: "Projects Completed", icon: Sparkles },
-  { value: "12", label: "Countries Reached", icon: Globe2 },
-  { value: "98%", label: "Client Satisfaction", icon: Heart },
-  { value: "5+", label: "Years of Experience", icon: Rocket },
 ];
 
 export function AsterHome() {
@@ -63,7 +52,7 @@ export function AsterHome() {
         .fromTo(".replica-nav", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.52 }, 0.32)
         .fromTo(".replica-copy > *", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.07 }, 0.42)
         .fromTo(".replica-card", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.48, stagger: 0.065 }, 0.62)
-        .fromTo(".replica-stats, .replica-scroll, .replica-control-hint", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.055 }, 0.78);
+        .fromTo(".replica-scroll, .replica-control-hint", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.055 }, 0.78);
     }, rootRef);
 
     return () => context.revert();
@@ -181,7 +170,7 @@ export function AsterHome() {
       </header>
 
       <section className="replica-copy">
-        <h1>Design <em>your</em><br />digital shore.</h1>
+        <h1>李玥宁<br /><em>Digital shore.</em></h1>
         <p>We craft digital experiences that<br />inspire, connect and grow your brand<br />beyond the horizon.</p>
         <button type="button" className="replica-cta" onClick={() => focusCard("branding")}>Explore Journeys <span><ArrowRight size={16} /></span></button>
       </section>
@@ -202,16 +191,6 @@ export function AsterHome() {
       </div>
 
       <div className="replica-scroll"><span>◆</span>Scroll to explore</div>
-
-      <aside className="replica-stats" aria-label="Aster Shore 数据">
-        {stats.map(({ value, label, icon: Icon }) => (
-          <div className="replica-stat" key={label}>
-            <span className="replica-stat-icon"><Icon size={21} /></span>
-            <strong>{value}</strong>
-            <small>{label}</small>
-          </div>
-        ))}
-      </aside>
 
       <div className="replica-control-hint">
         <span className="replica-orbit"><MousePointer2 size={13} /></span>
